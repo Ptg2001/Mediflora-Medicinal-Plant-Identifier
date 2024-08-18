@@ -1,6 +1,5 @@
 import requests
-from flask import Flask, render_template, request, jsonify, send_file, Response, redirect, url_for, session, flash
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask import Flask, render_template, request, jsonify, send_file, Response
 from fuzzywuzzy import fuzz
 from gtts import gTTS
 import speech_recognition as sr
@@ -14,11 +13,6 @@ app.config['SECRET_KEY'] = 'your_secret_key'
 
 # Load the trained model
 model = tf.keras.models.load_model("model/model_sev.h5")
-<<<<<<< HEAD
-=======
-
-# List of plant names
->>>>>>> 947aa6b65fff79dbbb4ebeb1d16e7fcb41f3732a
 all_plant_names = ['Arive-Dantu', 'Basale', 'Betel', 'Crape_Jasmine', 'Curry', 'Drumstick', 'Fenugreek', 'Guava',
                    'Hibiscus', 'Indian_Beech', 'Indian_Mustard', 'Jackfruit', 'Jamaica', 'Jamun', 'Jasmine',
                    'Karanda', 'Lemon', 'Mango', 'Mexican_Mint', 'Mint', 'Neem', 'Oleander', 'Parijata', 'Peepal',
@@ -36,38 +30,6 @@ with open('model/plants.json', 'r') as json_file:
 
 # Create a dictionary to store plant descriptions
 plant_descriptions = {plant['name']: plant['description'] for plant in plant_data['plants']}
-
-# New route for signup
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
-    if request.method == 'POST':
-        # Signup logic...
-        return render_template('signup.html')
-    return render_template('signup.html')
-
-# New route for login
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        # Login logic...
-        return render_template('login.html')
-    return render_template('login.html')
-
-# New route for dashboard (requires login)
-@app.route('/dashboard')
-def dashboard():
-    if 'user_id' in session:
-        return render_template('dashboard.html', capture_image_flag=capture_image_flag)
-    else:
-        flash('Please log in to access the dashboard.', 'warning')
-        return redirect(url_for('login'))
-
-# New route for logout
-@app.route('/logout')
-def logout():
-    session.pop('user_id', None)
-    flash('You have been logged out.', 'info')
-    return redirect(url_for('login'))
 
 # Function to capture frames from webcam, predict the plant, and overlay the prediction on the frame
 def generate_frames():
@@ -110,10 +72,6 @@ def generate_frames():
 
     cap.release()  # Release the camera when it's no longer needed
     cv2.destroyAllWindows()
-<<<<<<< HEAD
-
-=======
->>>>>>> 947aa6b65fff79dbbb4ebeb1d16e7fcb41f3732a
 
 # Preprocess the image before prediction
 def preprocess_image(frame):

@@ -1,0 +1,14 @@
+Flask
+Werkzeug
+requests
+fuzzywuzzy
+gTTS
+SpeechRecognition
+numpy
+opencv-python
+tensorflow
+pandas
+scikit_learn
+gunicorn
+python-Levenshtein
+joblib

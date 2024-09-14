@@ -2,6 +2,9 @@
 
 Team mediflora noticed that the knowledge among the general public about ayurvedic medicinal plants is less nowadays and because of that the indigenous medicinal system has been neglected. The main reason was, there wasn't any easy way to identify ayurvedic medicinal plants by the general public. So Mediflora web based application is introduced to solve the above problem where team mediflora has developed an automated system to identify ayurvedic medicinal plants by scanning the leaves of that plant and gives its respective medicinal properties.
 
+# Demo
+https://mediflora-medicinal-plant-identifier.onrender.com
+
 ## Technology Stack
 
  - Front-End: [HTML, CSS](https://html.com/)
@@ -9,9 +12,6 @@ Team mediflora noticed that the knowledge among the general public about ayurved
  - Version Controllers: [Github](https://github.com/)
  - IDEs: [Visual Studio Code](https://code.visualstudio.com/), [Pycharm](https://www.jetbrains.com/pycharm/)
  - Google tensorflow : (https://www.tensorflow.org/)
-
-# Demo
-https://mediflora.onrender.com
  
  ## Features of the prototype
  1.  Identify medical plants using a leaf.
@@ -43,7 +43,7 @@ https://mediflora.onrender.com
 
 -   Users can use the Q & A session in mediflora app to enhance the knowledge about medicinal plants. It will be an interactive platform for the younger generation to develop their knowledge about medicinal plants.
 
-#Dashboard
+# Dashboard
 ![image](https://github.com/Ptg2001/mediflora/assets/83298817/4a6f8ab9-e07f-4af4-a24b-b9e4cc175400)
 
 

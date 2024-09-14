@@ -13,3 +13,4 @@ gunicorn
 python-Levenshtein
 joblib
 pyttsx3
+flask_pymongo

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: rgba(255, 250, 240, 0.9); /* Light beige color */
+            color: black;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        nav .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            padding-left: 20px;
+        }
+
+        nav .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        nav a {
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 0 10px;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: rgba(0, 86, 179, 0.9);
+            color: #fff;
+        }
+
+        /* Profile Content */
+        .profile-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .profile-header img {
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+
+        .profile-header h1 {
+            margin: 0;
+            font-size: 2rem;
+            color: #343a40;
+        }
+
+        .profile-info {
+            font-size: 1.1rem;
+            color: #495057;
+        }
+
+        .profile-info .info-item {
+            margin-bottom: 10px;
+        }
+
+        .btn-edit {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+        }
+
+        .btn-edit:hover {
+            background-color: #0056b3;
+            color: #ffffff;
+        }
+
+
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .profile-header img {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">
+            <img src="https://w7.pngwing.com/pngs/377/665/png-transparent-herbal-medicine-logo-thumbnail.png" alt="Mediflora Logo">
+            Mediflora
+        </div>
+        <div>
+            <a href="/plants">Plants List</a>
+            <a href="/detect">Detect Plant</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/guide">Guide</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Profile Content -->
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="https://via.placeholder.com/120" alt="Profile Picture" id="profilePic">
+            <div>
+                <h1 id="username">Username</h1>
+                <p class="profile-info" id="email">Email: example@example.com</p>
+                <p class="profile-info" id="fullName">Full Name: John Doe</p>
+                <p class="profile-info" id="phone">Phone: +1234567890</p>
+                <p class="profile-info" id="address">Address: 123 Street, City, Country</p>
+                <p class="profile-info" id="dateOfBirth">Date of Birth: YYYY-MM-DD</p>
+            </div>
+        </div>
+        <button class="btn btn-edit" onclick="editProfile()">Edit Profile</button>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/api/profile') // Fetch profile data from the server
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('profilePic').src = data.profilePic || 'https://via.placeholder.com/120';
+                    document.getElementById('username').textContent = data.username || 'Username';
+                    document.getElementById('email').textContent = 'Email: ' + (data.email || 'example@example.com');
+                    document.getElementById('fullName').textContent = 'Full Name: ' + (data.fullName || 'John Doe');
+                    document.getElementById('phone').textContent = 'Phone: ' + (data.phone || '+1234567890');
+                    document.getElementById('address').textContent = 'Address: ' + (data.address || '123 Street, City, Country');
+                    document.getElementById('dateOfBirth').textContent = 'Date of Birth: ' + (data.dateOfBirth || 'YYYY-MM-DD');
+                })
+                .catch(error => console.error('Error fetching profile data:', error));
+        });
+
+        function editProfile() {
+            // Redirect to profile edit page or open an edit modal
+            window.location.href = '/edit-profile';
+        }
+    </script>
+</body>
+</html>

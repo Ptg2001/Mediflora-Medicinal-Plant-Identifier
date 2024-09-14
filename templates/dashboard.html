@@ -3,11 +3,315 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Mediflora Dashboard</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('https://w0.peakpx.com/wallpaper/455/194/HD-wallpaper-information-about-cutting-tops-off-herb-plants-medicinal-plants.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            color: black;
+        }
+
+        h1, h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: rgba(255, 250, 240, 0.9); /* Light beige color */
+            color: black;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        nav .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            padding-left: 20px;
+        }
+
+        nav .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        nav a {
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 0 10px;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: rgba(0, 86, 179, 0.9);
+            color: #fff;
+        }
+
+        /* Dashboard Layout */
+        .dashboard {
+            margin: 40px auto;
+            color: black;
+            padding: 20px;
+            max-width: 1200px;
+            background-color: #f5f5f5; /* Light grey */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background-color: #e0f7fa; /* Light cyan */
+            color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            width: 30%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .stat-card h3 {
+            font-size: 32px;
+            margin: 0;
+        }
+
+        .stat-card p {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background-color: #b2ebf2; /* Slightly darker cyan on hover */
+        }
+
+        /* News Slideshow */
+        .slideshow-container {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.9); /* Slightly opaque white background */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease;
+            width: 300%; /* 3 slides per view */
+        }
+
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            background: linear-gradient(135deg, rgba(255, 228, 196, 0.9), rgba(255, 182, 193, 0.9)); /* Gradient background */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .slide h3 {
+            color: #007bff;
+            font-size: 20px;
+        }
+
+        .slide p {
+            color: #333;
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            color: black;
+            background-color: rgba(255, 250, 240, 0.8); /* Light beige color */
+            border: none;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transform: translateY(-50%);
+        }
+
+        .nav-button:hover {
+            background-color: rgba(0, 86, 179, 0.9);
+            color: #fff;
+        }
+
+
+
+        .next {
+            right: 10px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(255, 250, 240, 0.9); /* Light beige color */
+            color: black;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .stats {
+                flex-direction: column;
+            }
+
+            .stat-card {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            nav {
+                flex-direction: column;
+            }
+
+            nav a {
+                margin: 5px 0;
+            }
+
+            .nav-button {
+                width: 40px;
+                height: 40px;
+                padding: 8px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Dashboard</h1>
-    <p>Welcome, {{ username }}!</p>
-    <a href="/logout">Logout</a>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">
+            <img src="https://w7.pngwing.com/pngs/377/665/png-transparent-herbal-medicine-logo-thumbnail.png" alt="Mediflora Logo"> <!-- Replace with your logo URL -->
+            Mediflora
+        </div>
+        <div>
+            <a href="/add_plant">Plants List</a>
+            <a href="/detect">Detect Plant</a>
+            <a href="/profile">Profile</a>
+            <a href="/guide">Guide</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard">
+        <h1>Welcome to Mediflora Dashboard</h1>
+
+        <!-- Statistics Section -->
+        <div class="stats">
+            <div class="stat-card">
+                <h3>120</h3>
+                <p>Registered Users</p>
+            </div>
+            <div class="stat-card">
+                <h3>300</h3>
+                <p>Medicinal Plants</p>
+            </div>
+            <div class="stat-card">
+                <h3>20</h3>
+                <p>New Additions This Month</p>
+            </div>
+        </div>
+
+        <h2>Latest News on Medicinal Plants</h2>
+
+        <!-- News Slideshow -->
+        <div class="slideshow-container">
+            <div class="slides">
+                <!-- Slide 1 -->
+                <div class="slide">
+                    <h3>Herbal Medicine Gaining Popularity in 2024</h3>
+                    <p>Recent studies show that herbal medicine is becoming more popular due to its natural healing properties. Learn more about the top medicinal plants this year.</p>
+                    <p><strong>हर्बल दवाओं की लोकप्रियता 2024 में बढ़ रही है</strong><br>हाल के अध्ययनों से पता चलता है कि हर्बल दवाएं इसके प्राकृतिक उपचार गुणों के कारण अधिक लोकप्रिय हो रही हैं। इस वर्ष के शीर्ष औषधीय पौधों के बारे में अधिक जानें।</p>
+                    <p><strong>हर्बल औषधियां 2024 मध्ये लोकप्रिय होण्याची</strong><br>अलीकडील अभ्यासांनी दर्शविले आहे की हर्बल औषधियांना त्यांच्या नैसर्गिक उपचार गुणांमुळे अधिक लोकप्रियता मिळत आहे. या वर्षाच्या शीर्ष औषधीय वनस्पतींबद्दल अधिक जाणून घ्या.</p>
+                </div>
+                <!-- Slide 2 -->
+                <div class="slide">
+                    <h3>Benefits of Aloe Vera for Skin Health</h3>
+                    <p>Aloe Vera has been used for centuries for its healing properties. This article discusses its uses for treating skin conditions and promoting overall health.</p>
+                    <p><strong>त्वचा स्वास्थ्य के लिए एलोवेरा के फायदे</strong><br>एलोवेरा को इसके उपचार गुणों के लिए सदियों से इस्तेमाल किया जा रहा है। यह लेख त्वचा की स्थितियों के इलाज और समग्र स्वास्थ्य को बढ़ावा देने के लिए इसके उपयोगों पर चर्चा करता है।</p>
+                    <p><strong>त्वचा आरोग्यासाठी अ‍ॅलो वेराचे फायदे</strong><br>अ‍ॅलो वेरा सदीच्या वापरात आहे त्याच्या उपचार गुणांसाठी. हा लेख त्वचेच्या स्थितींच्या उपचारासाठी आणि एकूण आरोग्याच्या प्रोमोशनसाठी त्याच्या उपयोगांवर चर्चा करतो.</p>
+                </div>
+                <!-- Slide 3 -->
+                <div class="slide">
+                    <h3>Understanding the Medicinal Properties of Echinacea</h3>
+                    <p>Echinacea is known for its immune-boosting properties. This article provides an overview of how it helps in preventing illnesses and supporting recovery.</p>
+                    <p><strong>एचिनेशिया की औषधीय गुणों को समझना</strong><br>एचिनेशिया को इसके प्रतिरक्षा-बढ़ाने वाले गुणों के लिए जाना जाता है। यह लेख यह विवरण करता है कि यह बीमारियों को रोकने और रिकवरी को समर्थन देने में कैसे मदद करता है।</p>
+                    <p><strong>इचिनेशियाच्या औषधीय गुणांना समजून घेणे</strong><br>इचिनेशिया तिच्या प्रतिकारक गुणांसाठी ओळखली जाते. हा लेख सांगतो की हे रोगांना प्रतिबंधित करण्यात आणि रिकव्हरीला समर्थन देण्यात कसे मदत करते.</p>
+                </div>
+            </div>
+            <!-- Navigation Buttons -->
+
+            <button class="nav-button next" onclick="plusSlides(1)">&#10095;</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 Mediflora. All rights reserved.
+    </footer>
+
+    <script>
+        let slideIndex = 0;
+
+        function showSlides() {
+            const slides = document.querySelector('.slides');
+            const totalSlides = slides.children.length;
+
+            if (slideIndex >= totalSlides) {
+                slideIndex = 0;
+            }
+            if (slideIndex < 0) {
+                slideIndex = totalSlides - 1;
+            }
+
+            slides.style.transform = `translateX(${-slideIndex * 100}%)`;
+        }
+
+        function plusSlides(n) {
+            slideIndex += n;
+            showSlides();
+        }
+
+        // Initialize slideshow
+        showSlides();
+        setInterval(() => plusSlides(1), 3000); // Change slide every 3 seconds
+    </script>
+
 </body>
 </html>

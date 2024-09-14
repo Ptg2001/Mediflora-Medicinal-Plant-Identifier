@@ -45,6 +45,12 @@
             background-color: #218838;
         }
 
+        #videoElement {
+            width: 100%;
+            height: auto;
+            margin-top: 10px;
+        }
+
         #camera-container {
             position: relative;
             z-index: 1;
@@ -82,9 +88,31 @@
             height: auto;
             margin-top: 20px;
         }
+
+        /* Hide the audio player */
+        #audio-player {
+            display: none;
+        }
     </style>
 </head>
 <body>
+
+<!-- Navbar with Back to Dashboard -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Plant Recognition</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
 <div class="container">
     <div class="row justify-content-center">
@@ -107,20 +135,29 @@
             </div>
 
             <div class="mt-4">
-                <div id="result-label" class="alert alert-info" role="alert"></div>
-                <div id="description-label" class="alert alert-success" role="alert"></div>
-            </div>
-
-            <div class="mt-4">
                 <input type="file" id="image-upload" accept="image/*">
                 <button id="predict-image-button" class="btn btn-bubble">
                     <i class="fas fa-camera" style="color: #ff0066;"></i> Predict Image
                 </button>
+
+                <!-- Language Dropdown -->
+                <select id="language-selector" class="btn btn-secondary ml-3">
+                    <option value="en" selected>English</option>
+                    <option value="hi">Hindi</option>
+                    <option value="mr">Marathi</option>
+                </select>
+
+                <!-- Reset Button -->
+                <button id="reset-button" class="btn btn-danger ml-3">
+                    <i class="fas fa-redo"></i> Reset
+                </button>
+
                 <img id="image-preview" src="#" alt="Image Preview" style="display: none;">
             </div>
 
             <div class="mt-4">
-                <audio controls id="audio-player" style="display: none;">
+                <!-- Audio element is hidden -->
+                <audio controls id="audio-player">
                     <source src="" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>
@@ -129,95 +166,126 @@
     </div>
 </div>
 
+<!-- Bootstrap JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script>
-const imageUpload = document.getElementById("image-upload");
-const predictImageButton = document.getElementById("predict-image-button");
-const imagePreview = document.getElementById("image-preview");
+const video = document.getElementById('video-feed');
+const captureImageButton = document.getElementById('capture-image-button');
+const predictImageButton = document.getElementById('predict-image-button');
+const languageSelector = document.getElementById('language-selector');
+const audioPlayer = document.getElementById('audio-player');
+const imagePreview = document.getElementById('image-preview');
+const resetButton = document.getElementById('reset-button');
 
-// Event listener for image upload
-imageUpload.addEventListener("change", function () {
-    const file = imageUpload.files[0];
-    if (file) {
-        imagePreview.src = URL.createObjectURL(file);
-        imagePreview.style.display = "block";
-    }
+let captureImageFlag = false;
+
+// Initialize camera
+navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+        video.srcObject = stream;
+    })
+    .catch(err => {
+        console.error('Error accessing webcam:', err);
+    });
+
+// Capture image
+captureImageButton.addEventListener('click', () => {
+    captureImageFlag = true;
 });
 
-predictImageButton.addEventListener("click", function () {
-    const file = imageUpload.files[0];
-    if (file) {
+// Predict image
+predictImageButton.addEventListener('click', async () => {
+    const selectedLanguage = languageSelector.value;
+    const image = captureImageFlag ? video.srcObject : document.getElementById('image-upload').files[0];
+
+    if (image) {
         const formData = new FormData();
-        formData.append("image", file);
+        formData.append('image', image);
+        formData.append('language', selectedLanguage);
 
-        fetch("/predict_image", {
-            method: "POST",
-            body: formData,
-        })
-        .then(response => response.ok ? response.json() : Promise.reject("Image prediction request failed."))
-        .then(data => {
-            document.getElementById("predicted-plant").textContent = `Predicted Plant: ${data.predicted_plant}`;
-            document.getElementById("plant-description").textContent = `Description: ${data.description}`;
-            speakDescription(data.description);
-        })
-        .catch(error => console.error("Error sending image prediction request:", error));
-    }
-});
+        try {
+            const response = await fetch('/predict_image', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            document.getElementById('predicted-plant').textContent = result.predicted_plant || 'Prediction failed';
+            document.getElementById('plant-description').textContent = result.description || 'Description not available';
 
-function speakDescription(description) {
-    if ('speechSynthesis' in window) {
-        const synth = window.speechSynthesis;
-        const descriptionUtterance = new SpeechSynthesisUtterance(description);
-        synth.speak(descriptionUtterance);
+            // Stop and reset the audio player
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0; // Reset to the start
+            audioPlayer.src = ''; // Clear the source
+
+            // Fetch and play the TTS audio
+            const ttsResponse = await fetch('/tts', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    'plant_name': result.predicted_plant,
+                    'language': selectedLanguage
+                })
+            });
+            const ttsData = await ttsResponse.json();
+
+            if (ttsData.tts_audio_url) {
+                // Reset the audio source and reload
+                audioPlayer.src = ttsData.tts_audio_url;
+                audioPlayer.load();
+                audioPlayer.style.display = 'none';  // Hide the audio player
+
+                audioPlayer.play().catch(error => {
+                    console.error('Error playing TTS audio:', error);
+                });
+            }
+        } catch (error) {
+            console.error('Error predicting image:', error);
+        }
     } else {
-        console.error("Speech synthesis not supported in this browser.");
+        alert('No image selected!');
     }
-}
-
-const videoFeed = document.getElementById("video-feed");
-const captureButton = document.getElementById("capture-image-button");
-const predictedPlant = document.getElementById("predicted-plant");
-const plantDescription = document.getElementById("plant-description");
-const voiceCommandButton = document.getElementById("voice-command-button");
-
-navigator.mediaDevices
-    .getUserMedia({ video: true })
-    .then(stream => videoFeed.srcObject = stream)
-    .catch(error => console.error("Error accessing the camera:", error));
-
-captureButton.addEventListener("click", captureImage);
-
-function captureImage() {
-    fetch("/capture_image", { method: "POST" })
-    .then(response => response.ok ? response.json() : Promise.reject("Image capture request failed."))
-    .then(data => {
-        predictedPlant.textContent = "Predicted Plant: " + data.predicted_plant;
-        plantDescription.textContent = "Description: " + data.description;
-    })
-    .catch(error => console.error("Error sending image capture request:", error));
-}
-
-voiceCommandButton.addEventListener("click", function () {
-    predictedPlant.textContent = "Listening...";
-    recognizeVoiceCommand();
 });
 
-function recognizeVoiceCommand() {
-    fetch("/voice_command", { method: "POST" })
-    .then(response => response.ok ? response.json() : Promise.reject("Voice command request failed."))
-    .then(data => {
-        predictedPlant.textContent = data.voice_command_result;
-        plantDescription.textContent = "";
-        if (data.tts_audio_url) playAudio(data.tts_audio_url);
-    })
-    .catch(error => console.error("Error sending voice command request:", error));
-}
+// Voice command functionality
+document.getElementById('voice-command-button').addEventListener('click', async () => {
+    const selectedLanguage = languageSelector.value;
+    try {
+        const response = await fetch('/voice_command', {
+            method: 'POST',
+            body: new URLSearchParams({
+                'language': selectedLanguage
+            })
+        });
+        const result = await response.json();
+        document.getElementById('predicted-plant').textContent = result.predicted_plant || 'Prediction failed';
+        document.getElementById('plant-description').textContent = result.description || 'Description not available';
 
-function playAudio(audioUrl) {
-    const audioPlayer = document.getElementById("audio-player");
-    audioPlayer.src = audioUrl;
-    audioPlayer.style.display = "block";
-    audioPlayer.play();
-}
+        // Stop and reset the audio player
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0;
+        audioPlayer.src = '';
+
+        // Fetch and play the TTS audio
+        if (result.tts_audio_url) {
+            audioPlayer.src = result.tts_audio_url;
+            audioPlayer.load();
+            audioPlayer.style.display = 'none';  // Hide the audio player
+
+            audioPlayer.play().catch(error => {
+                console.error('Error playing TTS audio:', error);
+            });
+        }
+    } catch (error) {
+        console.error('Error with voice command:', error);
+    }
+});
+
+// Reset button functionality - refresh the page and reset audio player
+resetButton.addEventListener('click', () => {
+    location.reload();  // Reloads the page, which also resets the audio player
+});
 </script>
 
 </body>

@@ -1,5 +1,3 @@
-import json
-import os
 from flask import Flask, render_template, request, jsonify, send_file, Response, redirect, url_for, session
 from fuzzywuzzy import fuzz
 import pyttsx3
@@ -11,15 +9,20 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_pymongo import PyMongo
 from gtts import gTTS
 from werkzeug.utils import secure_filename
+import time
+import os
+from threading import Timer
 
 # Initialize Flask app
 app = Flask(__name__)
 
 # MongoDB setup
-app.config['MONGO_URI'] = 'mongodb+srv://piyushhole:Piyushhole2001@ecom.neu3z5n.mongodb.net/users?retryWrites=true&w=majority'
+app.config[
+    'MONGO_URI'] = 'mongodb+srv://piyushhole:Piyushhole2001@ecom.neu3z5n.mongodb.net/users?retryWrites=true&w=majority'
 app.secret_key = 'secret_key'  # Needed for session management
 mongo = PyMongo(app)
 users_collection = mongo.db.users
+plants_collection = mongo.db.plants  # Access the 'plants' collection
 
 # Load the trained model
 model = tf.keras.models.load_model("model/model_sev.h5")
@@ -31,54 +34,29 @@ all_plant_names = ['Arive-Dantu', 'Basale', 'Betel', 'Crape_Jasmine', 'Curry', '
 # Create a voice recognizer
 recognizer = sr.Recognizer()
 
-# Load plant information from JSON file
-with open('plants.json', 'r', encoding='utf-8') as json_file:
-    plant_data = json.load(json_file)
 
-# Create a dictionary to store plant descriptions
-plant_descriptions = {'en': {}, 'hi': {}, 'mr': {}}
+# Fetch plant information from MongoDB
+def load_plant_descriptions():
+    plant_descriptions = {'en': {}, 'hi': {}, 'mr': {}}
 
-# Populate plant_descriptions from the loaded JSON data
-for plant in plant_data['plants']:
-    plant_name = plant.get('name')
-    descriptions = plant.get('descriptions', {})
+    # Fetch all plants from the MongoDB 'plants' collection
+    plants = plants_collection.find()
 
-    if plant_name:
-        plant_descriptions['en'][plant_name] = descriptions.get('en', 'No description available.')
-        plant_descriptions['hi'][plant_name] = descriptions.get('hi', 'No description available.')
-        plant_descriptions['mr'][plant_name] = descriptions.get('mr', 'No description available.')
+    for plant in plants:
+        plant_name = plant.get('name')
+        descriptions = plant.get('descriptions', {})
 
-def generate_frames():
-    global capture_image_flag
-    cap = cv2.VideoCapture(0)
-    if not cap.isOpened():
-        print("Error: Could not open camera.")
+        if plant_name:
+            plant_descriptions['en'][plant_name] = descriptions.get('en', 'No description available.')
+            plant_descriptions['hi'][plant_name] = descriptions.get('hi', 'No description available.')
+            plant_descriptions['mr'][plant_name] = descriptions.get('mr', 'No description available.')
 
-    while True:
-        success, frame = cap.read()
-        if not success:
-            break
-        if capture_image_flag:
-            # Preprocess the captured image for prediction
-            img = cv2.resize(frame, (150, 150))
-            img = img / 255.0
-            img = img.reshape(1, 150, 150, 3)
+    return plant_descriptions
 
-            # Predict the plant
-            predictions = model.predict(img)
-            predicted_class = all_plant_names[predictions.argmax()]
 
-            # Display the predicted plant on the frame
-            cv2.putText(frame, f"Predicted Plant: {predicted_class}", (10, 30),
-                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
+# Initialize plant descriptions from MongoDB
+plant_descriptions = load_plant_descriptions()
 
-        ret, buffer = cv2.imencode('.jpg', frame)
-        frame = buffer.tobytes()
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-
-    cap.release()
-    cv2.destroyAllWindows()
 
 def preprocess_image(frame):
     try:
@@ -99,6 +77,7 @@ def preprocess_image(frame):
     except Exception as e:
         raise Exception(f"Error preprocessing image: {str(e)}")
 
+
 @app.route('/predict_image', methods=['POST'])
 def predict_image():
     try:
@@ -118,11 +97,34 @@ def predict_image():
     except Exception as e:
         return jsonify({'error': str(e)})
 
+
+def cleanup_old_files():
+    try:
+        # Define the path where audio files are saved
+        directory = 'static'
+        now = time.time()
+        for filename in os.listdir(directory):
+            file_path = os.path.join(directory, filename)
+            # Check if the file is an audio file and if it's older than 1 hour (3600 seconds)
+            if filename.endswith('.mp3') and os.path.isfile(file_path):
+                if now - os.path.getmtime(file_path) > 10:
+                    os.remove(file_path)
+                    print(f"Deleted old file: {filename}")
+    except Exception as e:
+        print(f"Error during cleanup: {str(e)}")
+
+
 def generate_tts(description, lang):
+    # Clean up old files before saving a new one
+    cleanup_old_files()
+
+    # Add a unique suffix to the file name (e.g., timestamp)
+    timestamp = str(int(time.time()))
+    tts_file_path = f'static/plant_description_{timestamp}.mp3'
     speech = gTTS(text=description, lang=lang, slow=False)
-    tts_file_path = 'static/plant_description.mp3'
     speech.save(tts_file_path)
     return tts_file_path
+
 
 @app.route('/tts', methods=['POST'])
 def tts():
@@ -140,18 +142,22 @@ def tts():
             return jsonify({'error': 'TTS file could not be created.'})
 
         return jsonify({
-            'tts_audio_url': url_for('get_tts_audio')
+            'tts_audio_url': url_for('get_tts_audio', filename=os.path.basename(tts_file_path))
         })
     except Exception as e:
         return jsonify({'error': str(e)})
 
-@app.route('/get_tts_audio')
-def get_tts_audio():
-    return send_file('static/plant_description.mp3', as_attachment=False)
+
+@app.route('/get_tts_audio/<filename>')
+def get_tts_audio(filename):
+    file_path = os.path.join('static', filename)
+    return send_file(file_path, as_attachment=False)
+
 
 @app.route('/')
 def redirect_to_signup():
     return redirect(url_for('signup'))
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -166,6 +172,7 @@ def signup():
         return redirect(url_for('login'))
     return render_template('signup.html')
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -179,19 +186,23 @@ def login():
             return "Invalid credentials!"
     return render_template('login.html')
 
+
 @app.route('/dashboard')
 def dashboard():
     if 'username' not in session:
         return redirect(url_for('login'))
     return render_template('dashboard.html')
 
+
 @app.route('/guide')
 def guide():
     return render_template('guide.html')
 
+
 @app.route('/profile')
 def profile():
     return render_template('profile.html')
+
 
 @app.route('/api/profile')
 def get_profile():
@@ -221,60 +232,48 @@ def detect():
         return redirect(url_for('login'))
     return render_template('index.html')
 
+
 @app.route('/capture_image', methods=['POST'])
 def capture_image():
     try:
         cap = cv2.VideoCapture(0)
         ret, frame = cap.read()
         if not ret:
-            return jsonify({'message': 'Error capturing image.'})
-        img = cv2.resize(frame, (150, 150))
-        img = img / 255.0
-        img = img.reshape(1, 150, 150, 3)
-        predictions = model.predict(img)
-        predicted_class = all_plant_names[predictions.argmax()]
+            return jsonify({'message': 'Error capturing image'}), 500
+
+        file_name = 'captured_image.jpg'
+        file_path = os.path.join('static', file_name)
+        cv2.imwrite(file_path, frame)
         cap.release()
-        cv2.destroyAllWindows()
-        return jsonify({'predicted_plant': predicted_class})
-    except Exception as e:
-        return jsonify({'message': f'Error: {str(e)}'})
 
-@app.route('/logout')
-def logout():
-    session.pop('username', None)
-    return redirect(url_for('login'))
-
-@app.route('/voice_command', methods=['POST'])
-def voice_command():
-    try:
-        lang = request.form.get('language', 'en')
-
-        with sr.Microphone() as source:
-            recognizer.adjust_for_ambient_noise(source, duration=1)
-            audio = recognizer.listen(source)
-        query = recognizer.recognize_google(audio, language=lang)
-
-        best_match = None
-        best_score = 0
-        for plant in plant_data['plants']:
-            plant_name = plant['name']
-            score = fuzz.ratio(query.lower(), plant_name.lower())
-            if score > best_score:
-                best_match = plant_name
-                best_score = score
-
-        if best_match:
-            description = plant_descriptions.get(lang, {}).get(best_match, 'Description not available for this plant.')
-            tts_file_path = generate_tts(description, lang)
-            return jsonify({'plant_name': best_match, 'description': description, 'tts_audio_url': url_for('get_tts_audio')})
-        else:
-            return jsonify({'error': 'No matching plant found.'})
+        return jsonify({'image_url': url_for('static', filename=file_name)})
     except Exception as e:
         return jsonify({'error': str(e)})
 
-@app.route('/video_feed')
-def video_feed():
-    return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/recognize', methods=['POST'])
+def recognize():
+    try:
+        # Retrieve the captured image
+        image_url = request.form.get('image_url')
+        file_path = os.path.join('static', image_url.split('/')[-1])
+
+        # Read and preprocess the image
+        img = cv2.imread(file_path)
+        preprocessed_image = preprocess_image(img)
+
+        # Make predictions using the model
+        predictions = model.predict(preprocessed_image)
+        predicted_class = all_plant_names[predictions.argmax()]
+
+        # Get the plant description based on the predicted class and selected language
+        lang = request.form.get('language', 'en')
+        description = plant_descriptions.get(lang, {}).get(predicted_class, "Description not available for this plant.")
+
+        return jsonify({'predicted_plant': predicted_class, 'description': description})
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
 
 if __name__ == '__main__':
     app.run(debug=True)

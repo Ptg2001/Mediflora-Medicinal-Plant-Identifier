@@ -60,12 +60,32 @@
             margin: 0 10px;
             padding: 10px 20px;
             border-radius: 4px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            position: relative;
         }
 
         nav a:hover {
             background-color: rgba(0, 86, 179, 0.9);
             color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0px 4px 10px rgba(0, 86, 179, 0.4);
+        }
+
+        /* Add a subtle underline effect on hover */
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: #0056b3;
+            bottom: 0;
+            left: 50%;
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+            left: 0;
         }
 
         /* Dashboard Layout */
@@ -166,8 +186,6 @@
             color: #fff;
         }
 
-
-
         .next {
             right: 10px;
         }
@@ -182,6 +200,25 @@
             position: relative;
             bottom: 0;
             width: 100%;
+        }
+
+        /* Ensure footer stays at the bottom when content is less */
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dashboard {
+            flex-grow: 1;
+        }
+
+        footer {
+            position: relative;
+            bottom: 0;
         }
 
         /* Mobile Responsive */
@@ -209,6 +246,14 @@
                 padding: 8px;
             }
         }
+
+        /* For zoomed 100% view adjustments */
+        @media (min-width: 1024px) {
+            .dashboard {
+                margin-top: 60px;
+                margin-bottom: 60px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -229,7 +274,7 @@
     </nav>
 
     <!-- Dashboard Content -->
-    <div class="dashboard">
+      <div class="dashboard">
         <h1>Welcome to Mediflora Dashboard</h1>
 
         <!-- Statistics Section -->

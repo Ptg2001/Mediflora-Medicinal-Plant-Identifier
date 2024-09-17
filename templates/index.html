@@ -9,95 +9,87 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-    <style>
-        body {
-            background-image: url('https://images.unsplash.com/photo-1609486961058-cbfe79e35cbf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-color: #f0f0f0;
-            background-position: center center;
-        }
+   <style>
+    body {
+        background-image: url('https://images.unsplash.com/photo-1609486961058-cbfe79e35cbf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+    }
 
-        .container {
-            margin-top: 5rem;
-        }
+    .container {
+        margin-top: 5rem;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 30px;
+        border-radius: 10px;
+    }
 
+    .heading {
+        color: #007bff;
+        font-size: 2.5rem;
+        text-align: center;
+    }
+
+    .btn-bubble {
+        color: #fff;
+        background-color: #28a745;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-bubble:hover,
+    .btn-bubble:focus {
+        background-color: #218838;
+    }
+
+    .plant-info {
+        margin-top: 20px;
+    }
+
+    #image-preview {
+        max-width: 300px; /* Set a specific max-width */
+        max-height: 300px; /* Set a specific max-height */
+        width: auto;
+        height: auto;
+        margin-top: 20px;
+        display: block;
+        object-fit: cover; /* Ensure the image scales properly */
+    }
+
+    #audio-player {
+        display: none; /* Hide the audio player */
+    }
+
+    /* Responsive styling */
+    @media (max-width: 768px) {
         .heading {
-            color: #007bff;
-            font-size: 2.5rem;
+            font-size: 2rem;
         }
+    }
 
-        .btn-bubble {
-            color: #fff;
-            background-color: #28a745;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            font-size: 18px;
-            padding: 12px 24px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
+    #loading-icon {
+        display: none;
+    }
 
-        .btn-bubble:hover,
-        .btn-bubble:focus {
-            background-color: #218838;
-        }
+    .btn-icon {
+        display: flex;
+        align-items: center;
+    }
 
-        #videoElement {
-            width: 100%;
-            height: auto;
-            margin-top: 10px;
-        }
+    .btn-icon i {
+        margin-right: 8px;
+    }
+</style>
 
-        #camera-container {
-            position: relative;
-            z-index: 1;
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.5);
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        #video-feed {
-            width: 100%;
-            height: auto;
-        }
-
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        @keyframes blink {
-            0% { color: #007bff; }
-            50% { color: #ff0000; }
-            100% { color: #66ffff; }
-        }
-
-        .blinking {
-            animation: blink 2s infinite;
-        }
-
-        #image-preview {
-            max-width: 200px;
-            height: auto;
-            margin-top: 20px;
-        }
-
-        /* Hide the audio player */
-        #audio-player {
-            display: none;
-        }
-    </style>
 </head>
 <body>
 
-<!-- Navbar with Back to Dashboard -->
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Plant Recognition</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -114,55 +106,66 @@
     </div>
 </nav>
 
+<!-- Main content -->
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-lg-8 text-center">
-            <h1 class="mb-4 heading blinking">Plant Recognition and Description</h1>
+    <h1 class="heading">Plant Recognition and Description</h1>
 
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <!-- Camera and Image Upload -->
+            <h4>Upload or Capture Plant Image</h4>
             <div id="camera-container">
-                <video id="video-feed" autoplay playsinline muted></video>
-                <button id="capture-image-button" class="btn btn-bubble">
-                    <i class="fas fa-camera" style="color: #ff0066;"></i> Capture Image
+                <video id="video-feed" autoplay playsinline muted class="img-fluid mb-3"></video>
+                <button id="capture-image-button" class="btn btn-bubble btn-icon">
+                    <i class="fas fa-camera"></i> Capture Image
                 </button>
-                <button id="voice-command-button" class="btn btn-bubble">
-                    <i class="fas fa-microphone" style="color: #ff0066;"></i> Voice Command
-                </button>
-                <div class="plant-info mt-3">
-                    <h4><b>Predicted Plant With its Description:</b></h4>
-                    <p id="predicted-plant">Waiting for prediction...</p>
-                    <p id="plant-description"></p>
-                </div>
             </div>
+            <input type="file" id="image-upload" accept="image/*" class="form-control mt-3">
+            <button id="predict-image-button" class="btn btn-bubble btn-icon mt-3">
+                <i class="fas fa-camera"></i> Predict Image
+            </button>
+        </div>
 
-            <div class="mt-4">
-                <input type="file" id="image-upload" accept="image/*">
-                <button id="predict-image-button" class="btn btn-bubble">
-                    <i class="fas fa-camera" style="color: #ff0066;"></i> Predict Image
-                </button>
+        <div class="col-md-6">
+            <!-- Plant Info and Language Selection -->
+            <h4>Choose Language & Get Description</h4>
+            <label for="language-selector">Choose Language:</label>
+            <select id="language-selector" class="form-control mb-3">
+                <option value="en" selected>English</option>
+                <option value="hi">Hindi</option>
+                <option value="mr">Marathi</option>
+            </select>
 
-                <!-- Language Dropdown -->
-                <select id="language-selector" class="btn btn-secondary ml-3">
-                    <option value="en" selected>English</option>
-                    <option value="hi">Hindi</option>
-                    <option value="mr">Marathi</option>
-                </select>
+            <button id="voice-command-btn" class="btn btn-primary">
+                <i class="fas fa-microphone"></i> Speak Plant Name
+            </button>
 
-                <!-- Reset Button -->
-                <button id="reset-button" class="btn btn-danger ml-3">
-                    <i class="fas fa-redo"></i> Reset
-                </button>
-
-                <img id="image-preview" src="#" alt="Image Preview" style="display: none;">
-            </div>
-
-            <div class="mt-4">
-                <!-- Audio element is hidden -->
-                <audio controls id="audio-player">
-                    <source src="" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
+            <div class="plant-info mt-3">
+                <h5><b>Predicted Plant and Description:</b></h5>
+                <p id="predicted-plant">Waiting for prediction...</p>
+                <p id="plant-description"></p>
+                <img id="image-preview" src="#" alt="Uploaded Image" style="display: none;" class="img-thumbnail mt-3">
             </div>
         </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col text-center">
+            <!-- Reset button -->
+            <button id="reset-button" class="btn btn-danger btn-icon">
+                <i class="fas fa-redo"></i> Reset
+            </button>
+        </div>
+    </div>
+
+   <audio controls id="audio-player">
+        <source src="audio.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Loading Spinner -->
+    <div id="loading-icon" class="text-center mt-3">
+        <i class="fas fa-spinner fa-spin"></i> Predicting...
     </div>
 </div>
 
@@ -172,121 +175,157 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
-const video = document.getElementById('video-feed');
-const captureImageButton = document.getElementById('capture-image-button');
-const predictImageButton = document.getElementById('predict-image-button');
-const languageSelector = document.getElementById('language-selector');
-const audioPlayer = document.getElementById('audio-player');
-const imagePreview = document.getElementById('image-preview');
-const resetButton = document.getElementById('reset-button');
+    const video = document.getElementById('video-feed');
+    const captureImageButton = document.getElementById('capture-image-button');
+    const predictImageButton = document.getElementById('predict-image-button');
+    const languageSelector = document.getElementById('language-selector');
+    const audioPlayer = document.getElementById('audio-player');
+    const imagePreview = document.getElementById('image-preview');
+    const resetButton = document.getElementById('reset-button');
+    const loadingIcon = document.getElementById('loading-icon');
 
-let captureImageFlag = false;
+    let captureImageFlag = false;
 
-// Initialize camera
-navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => {
-        video.srcObject = stream;
-    })
-    .catch(err => {
-        console.error('Error accessing webcam:', err);
+    document.getElementById('voice-command-btn').addEventListener('click', function() {
+        fetch('/voice_command', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    document.getElementById('predicted-plant').textContent = 'Recognized Plant: ' + data.recognized_plant;
+                    document.getElementById('plant-description').textContent = 'Description: ' + data.description;
+                    const audioPlayer = document.getElementById('audio-player');
+                    audioPlayer.src = data.tts_audio_url;
+                    audioPlayer.style.display = 'block'; // Show the player temporarily
+                    audioPlayer.play().finally(() => {
+                        audioPlayer.style.display = 'none'; // Hide it after playback starts
+                    });
+                }
+            })
+            .catch(error => console.error('Error:', error));
     });
 
-// Capture image
-captureImageButton.addEventListener('click', () => {
-    captureImageFlag = true;
-});
-
-// Predict image
-predictImageButton.addEventListener('click', async () => {
-    const selectedLanguage = languageSelector.value;
-    const image = captureImageFlag ? video.srcObject : document.getElementById('image-upload').files[0];
-
-    if (image) {
-        const formData = new FormData();
-        formData.append('image', image);
-        formData.append('language', selectedLanguage);
-
-        try {
-            const response = await fetch('/predict_image', {
-                method: 'POST',
-                body: formData
-            });
-            const result = await response.json();
-            document.getElementById('predicted-plant').textContent = result.predicted_plant || 'Prediction failed';
-            document.getElementById('plant-description').textContent = result.description || 'Description not available';
-
-            // Stop and reset the audio player
-            audioPlayer.pause();
-            audioPlayer.currentTime = 0; // Reset to the start
-            audioPlayer.src = ''; // Clear the source
-
-            // Fetch and play the TTS audio
-            const ttsResponse = await fetch('/tts', {
-                method: 'POST',
-                body: new URLSearchParams({
-                    'plant_name': result.predicted_plant,
-                    'language': selectedLanguage
-                })
-            });
-            const ttsData = await ttsResponse.json();
-
-            if (ttsData.tts_audio_url) {
-                // Reset the audio source and reload
-                audioPlayer.src = ttsData.tts_audio_url;
-                audioPlayer.load();
-                audioPlayer.style.display = 'none';  // Hide the audio player
-
-                audioPlayer.play().catch(error => {
-                    console.error('Error playing TTS audio:', error);
-                });
-            }
-        } catch (error) {
-            console.error('Error predicting image:', error);
-        }
-    } else {
-        alert('No image selected!');
-    }
-});
-
-// Voice command functionality
-document.getElementById('voice-command-button').addEventListener('click', async () => {
-    const selectedLanguage = languageSelector.value;
-    try {
-        const response = await fetch('/voice_command', {
-            method: 'POST',
-            body: new URLSearchParams({
-                'language': selectedLanguage
-            })
+    // Initialize camera
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+            video.srcObject = stream;
+        })
+        .catch(err => {
+            console.error('Error accessing webcam:', err);
         });
-        const result = await response.json();
-        document.getElementById('predicted-plant').textContent = result.predicted_plant || 'Prediction failed';
-        document.getElementById('plant-description').textContent = result.description || 'Description not available';
 
-        // Stop and reset the audio player
+    // Capture image
+    captureImageButton.addEventListener('click', async () => {
+        captureImageFlag = true;
+    });
+
+    // Predict image
+    predictImageButton.addEventListener('click', async () => {
+        const selectedLanguage = languageSelector.value;
+        const image = captureImageFlag ? await captureImageFromVideo(video) : document.getElementById('image-upload').files[0];
+
+        if (image) {
+            loadingIcon.style.display = 'block';
+            const formData = new FormData();
+            formData.append('image', image);
+            formData.append('language', selectedLanguage);
+
+            try {
+                const response = await fetch('/predict_image', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                document.getElementById('predicted-plant').textContent = result.predicted_plant || 'Prediction failed';
+                document.getElementById('plant-description').textContent = result.description || 'Description not available';
+                imagePreview.src = URL.createObjectURL(image); // Display the uploaded image
+                imagePreview.style.display = 'block';
+
+                // Hide the loading icon
+                loadingIcon.style.display = 'none';
+
+                // Fetch and play the TTS audio
+                const ttsResponse = await fetch('/tts', {
+                    method: 'POST',
+                    body: new URLSearchParams({
+                        'plant_name': result.predicted_plant,
+                        'language': selectedLanguage
+                    })
+                });
+                const ttsData = await ttsResponse.json();
+
+                if (ttsData.tts_audio_url) {
+                    audioPlayer.src = ttsData.tts_audio_url;
+                    audioPlayer.load();
+                    audioPlayer.style.display = 'block'; // Show the player temporarily
+                    audioPlayer.play().finally(() => {
+                        audioPlayer.style.display = 'none'; // Hide it after playback starts
+                    });
+                }
+            } catch (error) {
+                console.error('Error predicting image:', error);
+                loadingIcon.style.display = 'none';
+            }
+        }
+    });
+
+    // Reset functionality
+    resetButton.addEventListener('click', () => {
+        // Clear the text content
+        document.getElementById('predicted-plant').textContent = 'Waiting for prediction...';
+        document.getElementById('plant-description').textContent = '';
+
+        // Hide and clear the image preview
+        imagePreview.style.display = 'none';
+        imagePreview.src = '';
+
+        // Hide and clear the audio player
+        audioPlayer.style.display = 'none';
         audioPlayer.pause();
-        audioPlayer.currentTime = 0;
         audioPlayer.src = '';
 
-        // Fetch and play the TTS audio
-        if (result.tts_audio_url) {
-            audioPlayer.src = result.tts_audio_url;
-            audioPlayer.load();
-            audioPlayer.style.display = 'none';  // Hide the audio player
+        // Reset the file input
+        const imageUpload = document.getElementById('image-upload');
+        imageUpload.value = ''; // This clears the file input
 
-            audioPlayer.play().catch(error => {
-                console.error('Error playing TTS audio:', error);
-            });
-        }
-    } catch (error) {
-        console.error('Error with voice command:', error);
+        // Reset capture image flag
+        captureImageFlag = false;
+    });
+
+    // Function to capture an image from video
+    function captureImageFromVideo(video) {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        return new Promise((resolve) => {
+            canvas.toBlob((blob) => {
+                resolve(blob);
+            }, 'image/jpeg');
+        });
     }
-});
 
-// Reset button functionality - refresh the page and reset audio player
-resetButton.addEventListener('click', () => {
-    location.reload();  // Reloads the page, which also resets the audio player
-});
+    document.getElementById('logout-button').addEventListener('click', function() {
+        fetch('/logout', { method: 'POST' })
+            .then(response => {
+                if (response.ok) {
+                    // Clear session storage or cookies
+                    localStorage.removeItem('token');
+                    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+
+                    // Redirect to login page
+                    window.location.href = '/login';
+                } else {
+                    // Handle error
+                    alert('Logout failed');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
 </script>
+
 
 </body>
 </html>

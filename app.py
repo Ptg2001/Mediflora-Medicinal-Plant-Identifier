@@ -25,7 +25,9 @@ users_collection = mongo.db.users
 plants_collection = mongo.db.plants  # Access the 'plants' collection
 
 # Load the trained model
-model = tf.keras.models.load_model("model/model_sev.h5")
+model_path = os.path.join(os.getcwd(), 'model', 'model_sev.h5')
+model = tf.keras.models.load_model(model_path)
+
 all_plant_names = ['Arive-Dantu', 'Basale', 'Betel', 'Crape_Jasmine', 'Curry', 'Drumstick', 'Fenugreek', 'Guava',
                    'Hibiscus', 'Indian_Beech', 'Indian_Mustard', 'Jackfruit', 'Jamaica', 'Jamun', 'Jasmine',
                    'Karanda', 'Lemon', 'Mango', 'Mexican_Mint', 'Mint', 'Neem', 'Oleander', 'Parijata', 'Peepal',

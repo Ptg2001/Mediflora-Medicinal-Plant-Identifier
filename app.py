@@ -232,6 +232,53 @@ def delete_plant(plant_id):
         return jsonify({'message': 'Plant deleted successfully'})
     else:
         return jsonify({'error': 'Plant not found'}), 404
+@app.route('/detect')
+def detect():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    return render_template('index.html')
+
+
+@app.route('/capture_image', methods=['POST'])
+def capture_image():
+    try:
+        cap = cv2.VideoCapture(0)
+        ret, frame = cap.read()
+        if not ret:
+            return jsonify({'message': 'Error capturing image'}), 500
+
+        file_name = 'captured_image.jpg'
+        file_path = os.path.join('static', file_name)
+        cv2.imwrite(file_path, frame)
+        cap.release()
+
+        return jsonify({'image_url': url_for('static', filename=file_name)})
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+
+@app.route('/recognize', methods=['POST'])
+def recognize():
+    try:
+        # Retrieve the captured image
+        image_url = request.form.get('image_url')
+        file_path = os.path.join('static', image_url.split('/')[-1])
+
+        # Read and preprocess the image
+        img = cv2.imread(file_path)
+        preprocessed_image = preprocess_image(img)
+
+        # Make predictions using the model
+        predictions = model.predict(preprocessed_image)
+        predicted_class = all_plant_names[predictions.argmax()]
+
+        # Get the plant description based on the predicted class and selected language
+        lang = request.form.get('language', 'en')
+        description = plant_descriptions.get(lang, {}).get(predicted_class, "Description not available for this plant.")
+
+        return jsonify({'predicted_plant': predicted_class, 'description': description})
+    except Exception as e:
+        return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -13,6 +13,7 @@ import time
 import os
 from bson import ObjectId
 import re
+import pickle  # Import pickle for loading the model
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -26,8 +27,9 @@ plants_collection = mongo.db.plants  # Access the 'plants' collection
 plantslist_collection = mongo.db.plantslist
 
 # Load the trained model
-model_path = os.path.join(os.getcwd(), 'model', 'model_sev.h5')
-model = tf.keras.models.load_model(model_path)
+model_path = os.path.join(os.getcwd(), 'model', 'model.pkl')  # Update the path to model.pkl
+with open(model_path, 'rb') as model_file:  # Load the model using pickle
+    model = pickle.load(model_file)
 
 all_plant_names = ['Arive-Dantu', 'Basale', 'Betel', 'Crape_Jasmine', 'Curry', 'Drumstick', 'Fenugreek', 'Guava',
                    'Hibiscus', 'Indian_Beech', 'Indian_Mustard', 'Jackfruit', 'Jamaica', 'Jamun', 'Jasmine',
@@ -224,18 +226,6 @@ def get_plant(plant_id):
             'wikipediaLink': plant.get('wikipediaLink', 'No link available.'),
             'locations': [loc['coordinates'] for loc in plant.get('locations', [])]
         })
-    else:
-        return jsonify({'error': 'Plant not found'}), 404
-
-@app.route('/api/plants/<string:plant_id>/delete', methods=['DELETE'])
-def delete_plant(plant_id):
-    if not re.match(r'^[0-9a-f]{24}$', plant_id):
-        return jsonify({'error': 'Invalid plant ID format'}), 400
-
-    result = plantslist_collection.delete_one({"_id": ObjectId(plant_id)})
-
-    if result.deleted_count == 1:
-        return jsonify({'message': 'Plant deleted successfully'})
     else:
         return jsonify({'error': 'Plant not found'}), 404
 @app.route('/detect')

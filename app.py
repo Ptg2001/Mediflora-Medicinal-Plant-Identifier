@@ -12,6 +12,8 @@ from werkzeug.utils import secure_filename
 import time
 import os
 from threading import Timer
+from bson import ObjectId
+import re
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -23,9 +25,12 @@ app.secret_key = 'secret_key'  # Needed for session management
 mongo = PyMongo(app)
 users_collection = mongo.db.users
 plants_collection = mongo.db.plants  # Access the 'plants' collection
+plantslist_collection = mongo.db.plantslist
 
 # Load the trained model
-model = tf.keras.models.load_model("model/model_sev.h5")
+model_path = os.path.join(os.getcwd(), 'model', 'model_sev.h5')
+model = tf.keras.models.load_model(model_path)
+
 all_plant_names = ['Arive-Dantu', 'Basale', 'Betel', 'Crape_Jasmine', 'Curry', 'Drumstick', 'Fenugreek', 'Guava',
                    'Hibiscus', 'Indian_Beech', 'Indian_Mustard', 'Jackfruit', 'Jamaica', 'Jamun', 'Jasmine',
                    'Karanda', 'Lemon', 'Mango', 'Mexican_Mint', 'Mint', 'Neem', 'Oleander', 'Parijata', 'Peepal',
@@ -186,12 +191,38 @@ def login():
             return "Invalid credentials!"
     return render_template('login.html')
 
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('login'))
+
 
 @app.route('/dashboard')
 def dashboard():
     if 'username' not in session:
         return redirect(url_for('login'))
-    return render_template('dashboard.html')
+
+    try:
+        # Fetch user information
+        user = users_collection.find_one({'username': session['username']})
+
+        # Fetch plants information
+        plants = list(plants_collection.find())
+
+        # Fetch plantslist information
+        plantslist = list(plantslist_collection.find())
+
+        # Optional: Additional statistics
+        total_users = users_collection.count_documents({})
+        total_plants = len(plants)
+        total_plantslist = len(plantslist)
+
+        return render_template('dashboard.html', user=user, plants=plants, plantslist=plantslist,
+                               total_users=total_users, total_plants=total_plants,
+                               total_plantslist=total_plantslist)
+    except Exception as e:
+        print(f"Error fetching data: {e}")
+        return render_template('error.html', message="Failed to fetch dashboard data.")
 
 
 @app.route('/guide')
@@ -203,6 +234,47 @@ def guide():
 def profile():
     return render_template('profile.html')
 
+@app.route('/plantlist')
+def plantlist():
+    return render_template('plantlist.html')
+
+
+@app.route('/api/plants', methods=['GET'])
+def get_plants():
+    plants = []
+    for plant in plantslist_collection.find():
+        plants.append({
+            'id': str(plant['_id']),
+            'name': plant.get('name'),
+            'description': plant.get('description', 'No description available.'),
+            'leafImages': plant.get('leafImages', []),
+            'regions': plant.get('regions', []),  # Changed to 'regions' for consistency
+            'wikipediaLink': plant.get('wikipediaLink', 'No link available.'),
+            'locations': [loc['coordinates'] for loc in plant.get('locations', [])]  # Flatten locations
+        })
+    return jsonify(plants)
+
+
+@app.route('/api/plants/<string:plant_id>', methods=['GET'])
+def get_plant(plant_id):
+    # Validate plant_id format
+    if not re.match(r'^[0-9a-f]{24}$', plant_id):
+        return jsonify({'error': 'Invalid plant ID format'}), 400
+
+    plant = plantslist_collection.find_one({"_id": ObjectId(plant_id)})
+
+    if plant:
+        return jsonify({
+            'id': str(plant['_id']),
+            'name': plant.get('name'),
+            'description': plant.get('description', 'No description available.'),
+            'leafImages': plant.get('leafImages', []),
+            'regions': plant.get('regions', []),  # Changed to 'regions' for consistency
+            'wikipediaLink': plant.get('wikipediaLink', 'No link available.'),
+            'locations': [loc['coordinates'] for loc in plant.get('locations', [])]  # Flatten locations
+        })
+    else:
+        return jsonify({'error': 'Plant not found'}), 404
 
 @app.route('/api/profile')
 def get_profile():

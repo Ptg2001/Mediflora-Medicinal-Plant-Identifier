@@ -66,17 +66,27 @@ def preprocess_image(frame):
 
 @app.route('/predict_image', methods=['POST'])
 def predict_image():
+    if 'image' not in request.files:
+        return jsonify({'error': 'No image uploaded'}), 400
+
+    image = request.files['image']
+    if image.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+
+    # Add code to preprocess the image here
     try:
-        image = request.files['image']
-        img = cv2.imdecode(np.frombuffer(image.read(), np.uint8), cv2.IMREAD_COLOR)
-        preprocessed_image = preprocess_image(img)
-        predictions = model.predict(preprocessed_image)
-        predicted_class = all_plant_names[predictions.argmax()]
-        lang = request.form.get('language', 'en')
-        description = plant_descriptions.get(lang, {}).get(predicted_class, "Description not available for this plant.")
-        return jsonify({'predicted_plant': predicted_class, 'description': description})
+        img = preprocess_image(image)
     except Exception as e:
-        return jsonify({'error': str(e)})
+        app.logger.error(f'Error processing image: {e}')
+        return jsonify({'error': 'Image processing failed'}), 500
+
+    try:
+        prediction = model.predict(img)  # Ensure this is not blocking
+        return jsonify({'prediction': prediction}), 200
+    except Exception as e:
+        app.logger.error(f'Prediction error: {e}')
+        return jsonify({'error': 'Prediction failed'}), 500
+
 
 def cleanup_old_files():
     try:

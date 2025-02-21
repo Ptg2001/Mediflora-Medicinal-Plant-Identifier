@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mediflora Guide and Tutorials</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --primary-hover: #45a049;
+            --background-color: rgba(255, 255, 255, 0.95);
+            --card-background: rgba(255, 255, 255, 0.9);
+            --text-color: #2c3e50;
+            --text-muted: #7f8c8d;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, #4CAF50, #81C784);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+        }
+
+        header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .guide-section {
+            background: var(--card-background);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .guide-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h1, h2 {
+            color: var(--text-color);
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .guide-section ul {
+            padding-left: 20px;
+        }
+
+        .guide-section li {
+            margin-bottom: 10px;
+        }
+
+        .tutorial {
+            background-color: #e8f4f8;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background-color: var(--text-color);
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Collapsible Sections */
+        .collapsible {
+            cursor: pointer;
+        }
+
+        .collapsible:after {
+            content: '\25BC';
+            font-size: 0.8em;
+            color: var(--primary-color);
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active:after {
+            content: '\25B2';
+        }
+
+        .content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-bar input {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid var(--primary-color);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-bar button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Video Tutorial Section */
+        .video-tutorial {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .video-tutorial iframe {
+            width: 100%;
+            max-width: 560px;
+            height: 315px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Progress Tracker */
+        .progress-tracker {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .progress-tracker .progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-tracker .progress {
+            height: 10px;
+            background-color: var(--primary-color);
+            width: 0;
+            transition: width 0.5s ease;
+        }
+
+        .progress-tracker .progress-text {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Chatbot */
+        .chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .chatbot:hover {
+            background-color: var(--primary-hover);
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .search-bar input {
+                width: 100%;
+            }
+
+            .search-bar button {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Mediflora Guide and Tutorials</h1>
+    </header>
+
+    <div class="container">
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search for a guide or tutorial...">
+            <button onclick="searchGuide()">Search</button>
+        </div>
+
+        <!-- Guide Sections -->
+        <div class="guide-section">
+            <h2 class="collapsible">1. Getting Started with Mediflora</h2>
+            <div class="content">
+                <p>Welcome to Mediflora! This guide will help you navigate our platform and make the most of our features.</p>
+                <ul>
+                    <li>Creating your account</li>
+                    <li>Setting up your profile</li>
+                    <li>Navigating the dashboard</li>
+                </ul>
+                <div class="tutorial">
+                    <h3>Tutorial: Setting Up Your Mediflora Account</h3>
+                    <ol>
+                        <li>Visit our homepage and click on "Sign Up"</li>
+                        <li>Fill in your details and choose a strong password</li>
+                        <li>Verify your email address</li>
+                        <li>Complete your profile with relevant information</li>
+                    </ol>
+                </div>
+                <div class="video-tutorial">
+                    <h3>Video Tutorial</h3>
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add more guide sections similarly -->
+
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+            <h3>Your Progress</h3>
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            <div class="progress-text" id="progressText">0% Complete</div>
+        </div>
+
+        <!-- Chatbot -->
+        <div class="chatbot" onclick="openChatbot()">
+            <i class="fas fa-comments"></i>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 Mediflora. All Rights Reserved.
+    </footer>
+
+    <script>
+        // Collapsible Sections
+        const collapsibles = document.querySelectorAll('.collapsible');
+        collapsibles.forEach(collapsible => {
+            collapsible.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                }
+            });
+        });
+
+        // Progress Tracker
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        let progress = 0;
+
+        function updateProgress() {
+            progress += 10;
+            if (progress > 100) progress = 100;
+            progressBar.style.width = progress + '%';
+            progressText.textContent = progress + '% Complete';
+        }
+
+        // Simulate progress update
+        setInterval(updateProgress, 2000);
+
+        // Chatbot
+        function openChatbot() {
+            alert('Chatbot feature coming soon!');
+        }
+
+        // Search Functionality
+        function searchGuide() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const sections = document.querySelectorAll('.guide-section');
+            sections.forEach(section => {
+                const text = section.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

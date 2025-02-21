@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautiful Plant Information Display</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #45a049;
+            --text-color: #333;
+            --bg-color: #f0f4f0;
+            --card-bg-color: #fff;
+            --header-bg-color: #2c3e50;
+            --header-text-color: #ecf0f1;
+            --sidebar-bg-color: #34495e;
+            --sidebar-text-color: #ecf0f1;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            display: grid;
+            grid-template-columns: minmax(250px, 1fr) 4fr;
+            min-height: 100vh;
+        }
+        .sidebar {
+            background-color: var(--sidebar-bg-color);
+            color: var(--sidebar-text-color);
+            padding: 2rem;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+        .sidebar h2 {
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        .sidebar ul {
+            list-style-type: none;
+        }
+        .sidebar ul li {
+            margin-bottom: 0.8rem;
+        }
+        .sidebar ul li a {
+            color: var(--sidebar-text-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar ul li a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        .sidebar ul li a i {
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+        }
+        .main-content {
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        .search-container {
+            margin-bottom: 2rem;
+        }
+        .search-container input {
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        .search-container input:focus {
+            outline: none;
+            box-shadow: 0 2px 15px rgba(76, 175, 80, 0.3);
+        }
+        .plant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .plant-card {
+            background-color: var(--card-bg-color);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .plant-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        .plant-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .plant-info {
+            padding: 1.5rem;
+        }
+        .plant-info h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        .plant-details {
+            display: none;
+            margin-top: 2rem;
+            background-color: var(--card-bg-color);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        #map {
+            height: 300px;
+            margin-top: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .loading-spinner {
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+        .loading-spinner::before,
+        .loading-spinner::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            border: 50px solid transparent;
+            border-bottom-color: var(--primary-color);
+            animation: leaf-grow 1.5s linear infinite;
+        }
+        .loading-spinner::after {
+            animation-delay: 0.75s;
+        }
+        @keyframes leaf-grow {
+            0% { transform: translate(-50%, -50%) rotate(0deg); opacity: 0; }
+            50% { transform: translate(-50%, -50%) rotate(180deg); opacity: 1; }
+            100% { transform: translate(-50%, -50%) rotate(360deg); opacity: 0; }
+        }
+        .back-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        @media (max-width: 768px) {
+            body {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none;
+            }
+            .main-content {
+                padding: 1rem;
+            }
+        }
+        .dashboard-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .dashboard-button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .herb-loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .herb-animation {
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+
+        .herb-leaf {
+            position: absolute;
+            width: 40px;
+            height: 80px;
+            background-color: var(--primary-color);
+            border-radius: 50px 0;
+            transform-origin: bottom center;
+        }
+
+        .herb-leaf:nth-child(1) { transform: rotate(0deg); animation: wave 1.5s ease-in-out infinite; }
+        .herb-leaf:nth-child(2) { transform: rotate(60deg); animation: wave 1.5s ease-in-out infinite 0.25s; }
+        .herb-leaf:nth-child(3) { transform: rotate(120deg); animation: wave 1.5s ease-in-out infinite 0.5s; }
+        .herb-leaf:nth-child(4) { transform: rotate(180deg); animation: wave 1.5s ease-in-out infinite 0.75s; }
+        .herb-leaf:nth-child(5) { transform: rotate(240deg); animation: wave 1.5s ease-in-out infinite 1s; }
+        .herb-leaf:nth-child(6) { transform: rotate(300deg); animation: wave 1.5s ease-in-out infinite 1.25s; }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(20deg); }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <h2>Plant Categories</h2>
+        <ul>
+            <li><a href="#"><i class="fas fa-leaf"></i> Flowering Plants</a></li>
+            <li><a href="#"><i class="fas fa-tree"></i> Trees</a></li>
+            <li><a href="#"><i class="fas fa-seedling"></i> Shrubs</a></li>
+            <li><a href="#"><i class="fas fa-cannabis"></i> Herbs</a></li>
+            <li><a href="#"><i class="fas fa-water"></i> Aquatic Plants</a></li>
+        </ul>
+       <a href="/dashboard" class="dashboard-button" id="dashboard-button"><i class="fas fa-tachometer-alt"></i> Go to Dashboard</a>
+    </aside>
+     <div class="herb-loading" id="herb-loading">
+        <div class="herb-animation">
+            <div class="herb-leaf"></div>
+            <div class="herb-leaf"></div>
+            <div class="herb-leaf"></div>
+            <div class="herb-leaf"></div>
+            <div class="herb-leaf"></div>
+            <div class="herb-leaf"></div>
+        </div>
+    </div>
+    <main class="main-content">
+        <div class="search-container">
+            <input type="text" id="plant-search" placeholder="Search for plants...">
+        </div>
+        <div class="plant-grid" id="plant-grid"></div>
+        <div id="plant-details" class="plant-details">
+            <button class="back-button" id="back-button">Back to Plants</button>
+            <h2 id="details-name"></h2>
+            <img id="details-image" class="plant-image" src="" alt="">
+            <p id="details-description"></p>
+            <p id="details-region"></p>
+            <p id="details-location"></p>
+            <div id="map"></div>
+            <p id="details-wikipediaLink"></p>
+        </div>
+    </main>
+    <div class="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        const loading = document.querySelector('.loading');
+        const plantGrid = document.getElementById('plant-grid');
+        const searchContainer = document.querySelector('.search-container');
+        const plantDetails = document.getElementById('plant-details');
+        const backButton = document.getElementById('back-button');
+        let map = null;
+
+        function showLoading() {
+            loading.style.display = 'flex';
+        }
+
+        function hideLoading() {
+            setTimeout(() => {
+                loading.style.display = 'none';
+            }, 1500); // 1.5 seconds delay
+        }
+
+        async function fetchPlants() {
+            showLoading();
+            try {
+                const response = await fetch('/api/plants');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch plants');
+                }
+                const plants = await response.json();
+                displayPlants(plants);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function createPlantCard(plant) {
+            return `
+                <div class="plant-card" data-id="${plant.id}">
+                    <img src="${plant.leafImages[0] || 'default-image.jpg'}" alt="${plant.name}" class="plant-image">
+                    <div class="plant-info">
+                        <h2 class="plant-name">${plant.name}</h2>
+                    </div>
+                </div>
+            `;
+        }
+
+        function displayPlants(plants) {
+            plantGrid.innerHTML = plants.map(createPlantCard).join('');
+            addCardClickListeners();
+        }
+
+        function addCardClickListeners() {
+            const cards = document.querySelectorAll('.plant-card');
+            cards.forEach(card => {
+                card.addEventListener('click', async () => {
+                    const plantId = card.dataset.id;
+                    await fetchPlantDetails(plantId);
+                });
+            });
+        }
+
+        async function fetchPlantDetails(id) {
+            showLoading();
+            try {
+                const response = await fetch(`/api/plants/${id}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch plant details');
+                }
+                const plant = await response.json();
+                showPlantDetails(plant);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function showPlantDetails(plant) {
+            plantGrid.style.display = 'none';
+            searchContainer.style.display = 'none';
+            plantDetails.style.display = 'block';
+
+            document.getElementById('details-name').textContent = plant.name;
+            document.getElementById('details-image').src = plant.leafImages[0] || 'default-image.jpg';
+            document.getElementById('details-description').textContent = plant.description || 'No description available.';
+            document.getElementById('details-region').textContent = `Regions: ${plant.regions ? plant.regions.join(', ') : 'Not specified'}`;
+
+            const locations = plant.locations || [];
+
+            if (Array.isArray(locations) && locations.length > 0) {
+                const firstLocCoords = locations[0];
+
+                if (firstLocCoords && firstLocCoords.length === 2) {
+                    document.getElementById('details-location').textContent = `Location: Longitude ${firstLocCoords[0]}, Latitude ${firstLocCoords[1]}`;
+
+                    if (map) {
+                        map.remove();
+                    }
+                    map = L.map('map').setView([firstLocCoords[1], firstLocCoords[0]], 5);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '© OpenStreetMap contributors'
+                    }).addTo(map);
+
+                    locations.forEach(location => {
+                        if (Array.isArray(location) && location.length === 2) {
+                            L.marker([location[1], location[0]]).addTo(map);
+                        }
+                    });
+                } else {
+                    document.getElementById('details-location').textContent = 'No valid coordinates available.';
+                }
+            } else {
+                document.getElementById('details-location').textContent = 'No location data available.';
+            }
+
+            document.getElementById('details-wikipediaLink').innerHTML = plant.wikipediaLink
+                ? `<a href="${plant.wikipediaLink}" target="_blank">View on Wikipedia</a>`
+                : 'No Wikipedia link available.';
+        }
+
+        function setupSearch() {
+            const searchInput = document.getElementById('plant-search');
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                const plantCards = document.querySelectorAll('.plant-card');
+                plantCards.forEach(card => {
+                    const plantName = card.querySelector('.plant-name').textContent.toLowerCase();
+                    if (plantName.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        function resetView() {
+            if (map) {
+                map.remove();
+                map = null;
+            }
+            plantDetails.style.display = 'none';
+            plantGrid.style.display = 'grid';
+            searchContainer.style.display = 'block';
+            fetchPlants();  // Refresh the plant grid
+        }
+
+        document.getElementById('dashboard-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('herb-loading').style.display = 'flex';
+            setTimeout(function() {
+                window.location.href = '/dashboard';
+            }, 2000); // Delay for 2 seconds to show the animation
+        });
+
+        backButton.addEventListener('click', resetView);
+
+        // Initialize
+        fetchPlants();
+        setupSearch();
+    </script>
+</body>
+</html>

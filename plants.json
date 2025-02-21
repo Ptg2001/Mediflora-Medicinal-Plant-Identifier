@@ -1,0 +1,244 @@
+{
+    "plants": [
+        {
+            "name": "Arive-Dantu",
+            "descriptions": {
+                "en": "Arive-Dantu: Also known as Amarnath, this plant can be used as a food to eat when on diet or looking for weight loss as it is rich in fiber, extremely low in calories, have traces of fats and absolutely no cholesterol. It is used to help cure ulcers, diarrhea, swelling of mouth or throat and high cholesterol. It also has chemicals that act as antioxidants.",
+                "hi": "अरिवे-दान्तू: इसे अमरनाथ के नाम से भी जाना जाता है, यह पौधा डाइट पर होते समय या वजन घटाने के लिए उपयोगी होता है क्योंकि इसमें फाइबर की अधिकता होती है, कैलोरी में अत्यंत कम होता है, वसा की मात्रा बहुत कम होती है और इसमें बिल्कुल भी कोलेस्ट्रॉल नहीं होता है। यह अल्सर, दस्त, मुँह या गले की सूजन और उच्च कोलेस्ट्रॉल को ठीक करने में मदद करता है। इसमें एंटीऑक्सीडेंट्स के रूप में कार्य करने वाले रसायन भी होते हैं।",
+                "mr": "अरिवे-दान्तू: ह्या वनस्पतीला अमरनाथ असं पण म्हटलं जातं, ही वनस्पती आहारात किंवा वजन कमी करण्यासाठी उपयोगी असू शकते कारण ह्या मध्ये फायबर्सची अधिकता असते, कॅलोरी कमी असतात, फॅट्सच्या ओळी अत्यंत कमी असतात आणि कोलेस्ट्रॉल बिल्कुलही नसतो. ह्या वनस्पतीचा उपयोग अल्सर, अतिसार, तोंड किंवा घशाच्या सूज आणि उच्च कोलेस्ट्रॉलसाठी केला जातो. ह्या मध्ये अँटीऑक्सीडन्ट्ससारखे रसायन असतात."
+            }
+        },
+        {
+            "name": "Basale",
+            "descriptions": {
+                "en": "Basale: Basale has an anti-inflammatory activity and wound healing ability. It can be helpful as a first aid, and the leaves of this plant can be crushed and applied to burns, scalds and wounds to help in healing of the wounds.",
+                "hi": "बासाले: बासाले में सूजन-रोधी गतिविधि और घाव भरने की क्षमता होती है। यह प्राथमिक उपचार के रूप में उपयोगी हो सकता है, और इस पौधे की पत्तियों को पीसकर जलन, जलने और घावों पर लगाया जा सकता है ताकि घावों के ठीक होने में मदद मिले।",
+                "mr": "बासाले: बासालेमध्ये सूज-रोधक क्रिया आणि जखम भरून काढण्याची क्षमता आहे. हे प्राथमिक उपचार म्हणून उपयुक्त ठरू शकते आणि ह्या वनस्पतीच्या पानांना चिरून जळणे, स्कॉल्ड आणि जखमांवर लावले जाऊ शकते ज्यामुळे जखमांची भरपाई होईल."
+            }
+        },
+        {
+            "name": "Betel",
+            "descriptions": {
+                "en": "Betel: The leaves of Betel possess immense therapeutic potential, and are often used in helping with digestion, and controlling cholesterol levels. They are also known for their antiseptic properties and can be used to treat wounds and ulcers.",
+                "hi": "पान: पान की पत्तियों में अपार चिकित्सा संभावनाएँ होती हैं, और अक्सर पाचन में मदद करने और कोलेस्ट्रॉल स्तर को नियंत्रित करने में उपयोग की जाती हैं। इन्हें उनके एंटीसेप्टिक गुणों के लिए भी जाना जाता है और जखम और अल्सर के इलाज के लिए उपयोग किया जा सकता है।",
+                "mr": "पान: पानाच्या पानांमध्ये अपार चिकित्सा संभावनाएँ असतात, आणि पाचन आणि कोलेस्ट्रॉल स्तर नियंत्रित करण्यासाठी वारंवार वापरले जातात. हे अँटीसेप्टिक गुणधर्मांसाठीही ओळखले जातात आणि जखमा आणि अल्सरच्या उपचारासाठी वापरले जाऊ शकतात."
+            }
+        },
+        {
+            "name": "Crape_Jasmine",
+            "descriptions": {
+                "en": "Crape Jasmine: Crape Jasmine is known for its medicinal properties such as anti-inflammatory, anti-bacterial, and anti-fungal properties. It helps in treating fever, cough, and cold and is used as a remedy for digestive issues.",
+                "hi": "क्रेप जास्मिन: क्रेप जास्मिन को इसके औषधीय गुणों के लिए जाना जाता है जैसे कि सूजन-रोधी, जीवाणु-रोधी, और कवक-रोधी गुण। यह बुखार, खांसी और जुकाम के इलाज में मदद करता है और पाचन संबंधी समस्याओं के लिए एक उपाय के रूप में उपयोग किया जाता है।",
+                "mr": "क्रेप जास्मिन: क्रेप जास्मिनचे औषधीय गुण जसे की सूज-रोधक, जीवाणू-रोधक, आणि कवक-रोधक गुण यासाठी ओळखले जाते. हे ताप, खोकला आणि सर्दीच्या उपचारासाठी मदत करते आणि पचनाच्या समस्यांसाठी उपाय म्हणून वापरले जाते."
+            }
+        },
+        {
+            "name": "Curry",
+            "descriptions": {
+                "en": "Curry: Curry plant is known for its antioxidant and anti-inflammatory properties. It helps in improving digestion, maintaining blood sugar levels and is used to enhance the flavor of dishes in cooking.",
+                "hi": "करी: करी का पौधा अपने एंटीऑक्सीडेंट और सूजन-रोधी गुणों के लिए जाना जाता है। यह पाचन में सुधार करने, रक्त शर्करा के स्तर को बनाए रखने में मदद करता है और पकवानों के स्वाद को बढ़ाने के लिए उपयोग किया जाता है।",
+                "mr": "करी: करीच्या वनस्पतीला अँटीऑक्सीडन्ट आणि सूज-रोधक गुणांसाठी ओळखले जाते. हे पाचन सुधारण्यासाठी, रक्त शर्करेची पातळी कायम ठेवण्यासाठी मदत करते आणि स्वयंपाकात पदार्थांचे स्वाद वाढवण्यासाठी वापरले जाते."
+            }
+        },
+        {
+            "name": "Drumstick",
+            "descriptions": {
+                "en": "Drumstick: Drumstick leaves are highly nutritious and are used to treat malnutrition. They have anti-inflammatory, antioxidant, and anti-diabetic properties. They help in improving digestion, strengthening bones and reducing inflammation.",
+                "hi": "ड्रमस्टिक: ड्रमस्टिक की पत्तियाँ अत्यधिक पोषक तत्वों से भरपूर होती हैं और कुपोषण के इलाज के लिए उपयोग की जाती हैं। इनमें सूजन-रोधी, एंटीऑक्सीडेंट और एंटी-डायबिटिक गुण होते हैं। ये पाचन को सुधारने, हड्डियों को मजबूत करने और सूजन को कम करने में मदद करती हैं।",
+                "mr": "ड्रमस्टिक: ड्रमस्टिकच्या पानांमध्ये अत्यधिक पोषक तत्त्व आहेत आणि कुपोषणाच्या उपचारासाठी वापरली जातात. ह्या मध्ये सूज-रोधक, अँटीऑक्सीडन्ट आणि अँटी-डायबेटिक गुण आहेत. हे पाचन सुधारण्यास, हाडे मजबूत करण्यास आणि सूज कमी करण्यास मदत करते."
+            }
+        },
+        {
+            "name": "Fenugreek",
+            "descriptions": {
+                "en": "Fenugreek: Fenugreek is known for its high fiber content, and its ability to help manage blood sugar levels, improve digestion and enhance milk production in breastfeeding mothers. It also has antioxidant and anti-inflammatory properties.",
+                "hi": "मेथी: मेथी अपनी उच्च फाइबर सामग्री और रक्त शर्करा स्तर को प्रबंधित करने, पाचन में सुधार करने और स्तनपान कराने वाली माताओं में दूध उत्पादन बढ़ाने की क्षमता के लिए जाना जाता है। इसमें एंटीऑक्सीडेंट और सूजन-रोधी गुण भी होते हैं।",
+                "mr": "मेथी: मेथी ह्या उच्च फायबर्सच्या सामग्रीसाठी आणि रक्तातील साखरेची पातळी नियंत्रित करण्यास, पचन सुधारण्यासाठी आणि स्तनपान करणाऱ्या मातांमध्ये दूध उत्पादन वाढवण्यासाठी सक्षमतेसाठी ओळखली जाते. ह्या मध्ये अँटीऑक्सीडन्ट आणि सूज-रोधक गुणही आहेत."
+            }
+        },
+        {
+            "name": "Guava",
+            "descriptions": {
+                "en": "Guava: Guava is rich in vitamins A and C, and is known to aid in digestion, reduce blood sugar levels, and boost the immune system. Its leaves are also used to treat various ailments including stomach pain and skin problems.",
+                "hi": "अमरूद: अमरूद विटामिन A और C से भरपूर होता है और पाचन में मदद करने, रक्त शर्करा के स्तर को कम करने और प्रतिरक्षा प्रणाली को बढ़ाने के लिए जाना जाता है। इसके पत्तों का उपयोग पेट दर्द और त्वचा की समस्याओं सहित विभिन्न बीमारियों के इलाज के लिए भी किया जाता है।",
+                "mr": "अमरूद: अमरूद विटॅमिन A आणि C ने समृद्ध आहे आणि पचनात मदत करण्यासाठी, रक्तातील साखरेची पातळी कमी करण्यासाठी आणि प्रतिकारशक्ती वाढवण्यासाठी ओळखले जाते. ह्या चे पानं पोटदुखी आणि त्वचेच्या समस्यांसह विविध समस्यांच्या उपचारासाठी वापरले जातात."
+            }
+        },
+        {
+            "name": "Hibiscus",
+            "descriptions": {
+                "en": "Hibiscus: Hibiscus flowers are rich in antioxidants and are known to help with high blood pressure, cholesterol levels and to boost the immune system. They are used in herbal teas and for their potential health benefits.",
+                "hi": "हिबिस्कस: हिबिस्कस के फूल एंटीऑक्सीडेंट्स से भरपूर होते हैं और उच्च रक्तचाप, कोलेस्ट्रॉल स्तर को नियंत्रित करने और प्रतिरक्षा प्रणाली को बढ़ाने में मदद करने के लिए जाने जाते हैं। इनका उपयोग हर्बल चाय में और संभावित स्वास्थ्य लाभों के लिए किया जाता है।",
+                "mr": "हिबिस्कस: हिबिस्कसच्या फुलांमध्ये अँटीऑक्सीडन्ट्सची भरपूर मात्रा असते आणि उच्च रक्तदाब, कोलेस्ट्रॉल पातळी नियंत्रित करण्यासाठी आणि प्रतिकारशक्ती वाढवण्यासाठी ओळखले जातात. ह्या वनस्पतींचा वापर हर्बल चहा मध्ये आणि संभाव्य आरोग्य लाभांसाठी केला जातो."
+            }
+        },
+        {
+            "name": "Indian_Beech",
+            "descriptions": {
+                "en": "Indian Beech: The Indian Beech tree is known for its medicinal properties such as reducing fever, treating inflammation and improving skin health. Its leaves and bark are often used in traditional medicine.",
+                "hi": "इंडियन बिच: इंडियन बिच का पेड़ इसके औषधीय गुणों के लिए जाना जाता है जैसे कि बुखार को कम करने, सूजन का इलाज करने और त्वचा के स्वास्थ्य को सुधारने के लिए। इसकी पत्तियों और छाल का पारंपरिक चिकित्सा में अक्सर उपयोग किया जाता है।",
+                "mr": "इंडियन बिच: इंडियन बिच झाड त्याच्या औषधीय गुणांसाठी ओळखले जाते जसे की ताप कमी करणे, सूजन उपचार करणे आणि त्वचेच्या आरोग्य सुधारण्यासाठी. ह्या झाडाच्या पानांचा आणि सालाचा पारंपरिक औषधीत वापर केला जातो."
+            }
+        },
+        {
+            "name": "Indian_Mustard",
+            "descriptions": {
+                "en": "Indian Mustard: Indian Mustard seeds have anti-inflammatory, antimicrobial, and antioxidant properties. They are used in cooking for their distinct flavor and are known to aid in digestion and maintain heart health.",
+                "hi": "भारतीय सरसों: भारतीय सरसों के बीज में सूजन-रोधी, एंटीमाइक्रोबियल और एंटीऑक्सीडेंट गुण होते हैं। इनका उपयोग खाना पकाने में उनके विशिष्ट स्वाद के लिए किया जाता है और यह पाचन में सहायता करने और हृदय स्वास्थ्य बनाए रखने के लिए जाना जाता है।",
+                "mr": "भारतीय मोहरी: भारतीय मोहरीच्या बीजांमध्ये सूजन-रोधक, अँटीमायक्रोबियल, आणि अँटीऑक्सीडन्ट गुण असतात. ह्या वनस्पतीचा वापर पाककृतीमध्ये त्यांच्या वेगळ्या चवीसाठी केला जातो आणि ह्या पाचनात मदत करण्यासाठी आणि हृदयाच्या आरोग्याचे संरक्षण करण्यासाठी ओळखले जाते."
+            }
+        },
+        {
+            "name": "Jackfruit",
+            "descriptions": {
+                "en": "Jackfruit: Jackfruit is rich in vitamins and minerals and is known for its antioxidant properties. It helps in improving digestion, boosting immunity and is used as a meat substitute in vegan diets.",
+                "hi": "जैकफ्रूट: जैकफ्रूट विटामिन्स और मिनरल्स से भरपूर होता है और इसके एंटीऑक्सीडेंट गुणों के लिए जाना जाता है। यह पाचन में सुधार करने, प्रतिरक्षा को बढ़ाने में मदद करता है और शाकाहारी आहार में मांस के विकल्प के रूप में उपयोग किया जाता है।",
+                "mr": "जॅकफ्रूट: जॅकफ्रूट विटॅमिन्स आणि मिनरल्सने भरपूर असतो आणि त्याच्या अँटीऑक्सीडन्ट गुणांसाठी ओळखला जातो. हे पाचन सुधारण्यास, प्रतिकारशक्ती वाढवण्यास आणि शाकाहारी आहारात मांसाच्या पर्याय म्हणून वापरले जाते."
+            }
+        },
+        {
+            "name": "Jamaica",
+            "descriptions": {
+                "en": "Jamaica: The Jamaica plant is known for its medicinal properties such as its high content of antioxidants and vitamins. It is used in treating digestive issues and improving overall health.",
+                "hi": "जमैका: जैमाइका पौधा इसके औषधीय गुणों के लिए जाना जाता है जैसे कि इसके उच्च एंटीऑक्सीडेंट और विटामिन सामग्री। इसका उपयोग पाचन संबंधी समस्याओं के इलाज और समग्र स्वास्थ्य में सुधार के लिए किया जाता है।",
+                "mr": "जमैका: जमैका वनस्पती तिच्या औषधीय गुणांसाठी ओळखली जाते जसे की तिच्या उच्च अँटीऑक्सीडन्ट आणि विटॅमिन सामग्रीसाठी. ह्या वनस्पतीचा वापर पचनाच्या समस्यांच्या उपचारासाठी आणि एकूणच आरोग्य सुधारण्यासाठी केला जातो."
+            }
+        },
+        {
+            "name": "Jamun",
+            "descriptions": {
+                "en": "Jamun: Jamun fruit is known for its antioxidant and anti-diabetic properties. It helps in managing blood sugar levels, improving digestion and has benefits for the immune system.",
+                "hi": "जामुन: जामुन फल अपने एंटीऑक्सीडेंट और एंटी-डायबिटिक गुणों के लिए जाना जाता है। यह रक्त शर्करा स्तर को प्रबंधित करने, पाचन को सुधारने में मदद करता है और प्रतिरक्षा प्रणाली के लिए लाभकारी है।",
+                "mr": "जामुन: जामुन फल अँटीऑक्सीडन्ट आणि अँटी-डायबेटिक गुणांसाठी ओळखले जाते. हे रक्तातील साखरेची पातळी नियंत्रित करण्यात, पचन सुधारण्यात आणि प्रतिकारशक्तीसाठी लाभकारी आहे."
+            }
+        },
+        {
+            "name": "Jasmine",
+            "descriptions": {
+                "en": "Jasmine: Jasmine flowers have calming properties and are used in aromatherapy to reduce stress and anxiety. They are also used for their antibacterial and anti-inflammatory properties.",
+                "hi": "जैस्मिन: जैस्मिन के फूल शांतिदायक गुणों से भरे होते हैं और अरोमाथेरेपी में तनाव और चिंता को कम करने के लिए उपयोग किए जाते हैं। इनका उपयोग बैक्टीरियल और सूजन-रोधी गुणों के लिए भी किया जाता है।",
+                "mr": "जास्मिन: जास्मिनच्या फुलांमध्ये शांतिदायक गुण असतात आणि अरोमाथेरेपी मध्ये ताण आणि चिंतेला कमी करण्यासाठी वापरले जातात. ह्या वनस्पतींचा उपयोग जीवाणू-रोधक आणि सूज-रोधक गुणांसाठी पण केला जातो."
+            }
+        },
+        {
+            "name": "Karanda",
+            "descriptions": {
+                "en": "Karanda: Karanda is known for its high vitamin C content and is used for its anti-inflammatory and antioxidant properties. It helps in boosting the immune system and improving overall health.",
+                "hi": "करांदा: करांदा अपने उच्च विटामिन C सामग्री के लिए जाना जाता है और इसके सूजन-रोधी और एंटीऑक्सीडेंट गुणों के लिए उपयोग किया जाता है। यह प्रतिरक्षा प्रणाली को बढ़ावा देने और समग्र स्वास्थ्य में सुधार करने में मदद करता है।",
+                "mr": "करांदा: करांदा ह्या उच्च विटॅमिन C सामग्रीसाठी ओळखले जाते आणि त्याच्या सूज-रोधक आणि अँटीऑक्सीडन्ट गुणांसाठी वापरले जाते. हे प्रतिकारशक्ती वाढवण्यास आणि एकूणच आरोग्य सुधारण्यासाठी मदत करते."
+            }
+        },
+        {
+            "name": "Lemon",
+            "descriptions": {
+                "en": "Lemon: Lemon is rich in vitamin C and is known for its antioxidant properties. It aids in digestion, boosts the immune system and can help in maintaining healthy skin.",
+                "hi": "नींबू: नींबू विटामिन C से भरपूर होता है और इसके एंटीऑक्सीडेंट गुणों के लिए जाना जाता है। यह पाचन में मदद करता है, प्रतिरक्षा प्रणाली को बढ़ाता है और स्वस्थ त्वचा बनाए रखने में सहायक हो सकता है।",
+                "mr": "लिंबू: लिंबू विटॅमिन C ने समृद्ध असतो आणि त्याच्या अँटीऑक्सीडन्ट गुणांसाठी ओळखला जातो. हे पचनात मदत करते, प्रतिकारशक्ती वाढवते आणि आरोग्यपूर्ण त्वचा राखण्यासाठी उपयोगी ठरू शकते."
+            }
+        },
+         {
+            "name": "Mango",
+            "descriptions": {
+                "en": "Mango: Known as King of Fruits by many, Mango is also packed with many medicinal properties. Mangoes have various Vitamins, such as Vitamin C, K, A, and minerals such as Potassium and Magnesium. Mangoes are also rich in antioxidants, which can reduce the chances of Cancer. Mangoes are also known to promote digestive health and heart health too.",
+                "hi": "आम: कई लोगों द्वारा फलों के राजा के रूप में जाना जाता है, आम में भी कई औषधीय गुण होते हैं। आम में विभिन्न विटामिन होते हैं, जैसे कि विटामिन C, K, A, और खनिज जैसे कि पोटेशियम और मैग्नीशियम। आम भी एंटीऑक्सीडेंट्स से भरपूर होते हैं, जो कैंसर के जोखिम को कम कर सकते हैं। आम पाचन स्वास्थ्य और हृदय स्वास्थ्य को भी बढ़ावा देने के लिए जाना जाता है।",
+                "mr": "आंबा: अनेक लोकांद्वारे फळांचा राजा मानला जातो, आंब्यात अनेक औषधीय गुणही आहेत. आंब्यात विविध विटॅमिन्स असतात, जसे की विटॅमिन C, K, A, आणि खनिजे जसे की पोटॅशियम आणि मॅग्नेशियम. आंब्यात अँटीऑक्सीडन्ट्सचे प्रमाणही भरपूर असते, जे कर्करोगाची शक्यता कमी करू शकते. आंबा पचन आणि हृदयाच्या आरोग्याला वाढवण्यासाठीही ओळखला जातो."
+            }
+        },
+        {
+            "name": "Mexican_Mint",
+            "descriptions": {
+                "en": "Mexican Mint: Mexican Mint is a traditional remedy used to treat a variety of conditions. The leaves are a major part used for medicinal purposes. Mexican mint helps in curing respiratory illness, such as cold, sore throat, congestion, runny nose, and also helps in natural skincare.",
+                "hi": "मैक्सिकन पुदीना: मैक्सिकन पुदीना एक पारंपरिक उपाय है जिसका उपयोग विभिन्न समस्याओं के इलाज के लिए किया जाता है। पत्तियाँ चिकित्सा उद्देश्यों के लिए एक महत्वपूर्ण भाग होती हैं। मैक्सिकन पुदीना श्वसन संबंधी बीमारियों जैसे जुकाम, गले में खराश, भीड़भाड़, बहती नाक और प्राकृतिक स्किनकेयर में भी मदद करता है।",
+                "mr": "मेक्सिकन पुदिना: मेक्सिकन पुदिना एक पारंपरिक औषधि आहे ज्याचा उपयोग विविध अटींना उपचार करण्यासाठी केला जातो. पानं औषधीय उद्देशांसाठी एक महत्त्वाचा भाग आहे. मेक्सिकन पुदिना श्वसन संबंधी समस्या जसे की सर्दी, गळ्यात सूज, कोंडांस, वाहणारा नाक आणि नैसर्गिक त्वचा काळजीमध्ये मदत करते."
+            }
+        },
+        {
+            "name": "Mint",
+            "descriptions": {
+                "en": "Mint: Mint is used usually in our daily lives to keep bad mouth odour at bay, but besides that, this plant also helps in a variety of other functions such as relieving indigestion, upset stomach, and can also improve irritable bowel syndrome (IBS). Mint is also full of nutrients such as Vitamin A, Iron, Manganese, Folate, and Fiber.",
+                "hi": "पुदीना: पुदीना आमतौर पर हमारे दैनिक जीवन में बुरी मुँह की गंध को दूर करने के लिए उपयोग किया जाता है, लेकिन इसके अलावा, यह पौधा कई अन्य कार्यों में भी मदद करता है जैसे कि अपच, गड़बड़ पेट और इर्रिटेबल बाउल सिंड्रोम (IBS) को सुधारना। पुदीना विटामिन A, आयरन, मैंगनीज, फोलेट और फाइबर जैसे पोषक तत्वों से भरपूर होता है।",
+                "mr": "पुदिना: पुदिनाचा उपयोग सामान्यतः आपल्या दैनंदिन जीवनात वाईट तोंडाच्या वासाला टाकण्यासाठी केला जातो, परंतु त्यासोबतच, ह्या वनस्पतीने अपचन, त्रासदायक पोट आणि इरिटेबल बाऊल सिंड्रोम (IBS) मध्ये सुधारणे करण्यासाठी मदत केली आहे. पुदिना विटॅमिन A, लोहा, मँगनीज, फोलेट आणि फायबर्सने भरपूर आहे."
+            }
+        },
+        {
+            "name": "Neem",
+            "descriptions": {
+                "en": "Neem: Prevalent in traditional remedies for a long time, Neem is considered a boon for mankind. It helps to cure many skin diseases such as acne, fungal infections, dandruff, leprosy, and also nourishes and detoxifies the skin. It also boosts your immunity and acts as an insect and mosquito repellent. It helps to reduce joint pain and prevents gastrointestinal diseases.",
+                "hi": "नीम: लंबे समय से पारंपरिक उपचारों में प्रचलित, नीम को मानवता के लिए एक वरदान माना जाता है। यह कई त्वचा रोगों जैसे कि मुँहासे, फंगल संक्रमण, डैंड्रफ, कुष्ठ रोग को ठीक करने में मदद करता है और त्वचा को पोषित और डिटॉक्सिफाई करता है। यह आपकी प्रतिरक्षा को भी बढ़ाता है और कीट और मच्छर रिपेलेंट के रूप में काम करता है। यह जोड़ों के दर्द को कम करने और पाचन तंत्र की बीमारियों को रोकने में भी मदद करता है।",
+                "mr": "नीम: पारंपरिक औषधीतून लांबकाळ वापरले जाते, नीम मानवतेसाठी एक वरदान मानले जाते. हे अनेक त्वचेच्या रोगांमध्ये जसे की मुरुम, कविळीच्या संसर्ग, डँड्रफ, कुष्ठ रोग यांचा उपचार करण्यास मदत करते आणि त्वचेला पोषण व डीटॉक्सिफाय करते. हे तुमची प्रतिकारशक्ती वाढवते आणि कीटक आणि मच्छर नाशक म्हणून कार्य करते. हे सांध्यातील वेदना कमी करण्यास आणि पचनसंस्थेच्या आजारांना प्रतिबंध करण्यास मदत करते."
+            }
+        },
+        {
+            "name": "Oleander",
+            "descriptions": {
+                "en": "Oleander: The use of this plant should be done extremely carefully, and never without the supervision of a doctor, as it can be a deadly poison. Despite the danger, oleander seeds and leaves are used to make medicine. Oleander is used for heart conditions, asthma, epilepsy, cancer, leprosy, malaria, ringworm, indigestion, and venereal disease.",
+                "hi": "ओलियनडर: इस पौधे का उपयोग अत्यंत सावधानीपूर्वक किया जाना चाहिए, और कभी भी डॉक्टर की निगरानी के बिना नहीं, क्योंकि यह एक जानलेवा जहर हो सकता है। खतरे के बावजूद, ओलियनडर के बीज और पत्तियों का उपयोग दवा बनाने के लिए किया जाता है। ओलियनडर का उपयोग हृदय संबंधी स्थितियों, अस्थमा, मिर्गी, कैंसर, कुष्ठ रोग, मलेरिया, रिंगवॉर्म, अपच और यौन संचारित रोगों के लिए किया जाता है।",
+                "mr": "ओलियंडर: ह्या वनस्पतीचा वापर अत्यंत काळजीपूर्वक केला पाहिजे, आणि कधीच डॉक्टरांच्या देखरेखीशिवाय नाही, कारण हे एका प्राणघातक विषाचे रूप घेऊ शकते. धोक्यांच्या बाबी असूनही, ओलियंडरच्या बीया आणि पानांचा वापर औषध तयार करण्यासाठी केला जातो. ओलियंडरचा उपयोग हृदयाच्या स्थितींमध्ये, अस्थमा, मिर्गी, कर्करोग, कुष्ठ रोग, मलेरिया, अंगठ्याचा किडा, अपचन आणि यौन संसर्गाचे रोग यासाठी केला जातो."
+            }
+        },
+        {
+            "name": "Parijata",
+            "descriptions": {
+                "en": "Parijata: Parijata plant is used for varying purposes. It shows anti-inflammatory and antipyretic (fever-reducing) properties which help in managing pain and fever. It is also used as a laxative, in rheumatism, skin ailments, and as a sedative. It is also said to provide relief from the symptoms of cough and cold. Drinking fresh Parijat leaves juice with honey helps to reduce the symptoms of fever.",
+                "hi": "परिजात: परिजात पौधा विभिन्न प्रयोजनों के लिए उपयोग किया जाता है। यह एंटी-इन्फ्लेमेटरी और एंटीपायरेटिक (बुखार-घटाने) गुणों को दिखाता है जो दर्द और बुखार को प्रबंधित करने में मदद करते हैं। इसका उपयोग एक लैक्टिव के रूप में, गठिया, त्वचा की बीमारियों और एक शांति देने वाले के रूप में भी किया जाता है। यह खांसी और जुकाम के लक्षणों से राहत प्रदान करने के लिए भी कहा जाता है। ताजे परिजात पत्तियों का रस शहद के साथ पीने से बुखार के लक्षणों को कम करने में मदद मिलती है।",
+                "mr": "परिजात: परिजात वनस्पती विविध उद्देशांसाठी वापरली जाते. ह्या वनस्पतीत सूज कमी करणारे आणि ताप कमी करणारे गुण असतात जे वेदना आणि ताप व्यवस्थापित करण्यात मदत करतात. याचा उपयोग जुलाब म्हणून, संधिवात, त्वचेच्या समस्यांमध्ये आणि एक शांतीकारक म्हणून केला जातो. हा खोकला आणि सर्दीच्या लक्षणांपासून आराम देतो असे सांगितले जाते. ताज्या परिजात पानांचा रस मधासह पिणे तापाचे लक्षणे कमी करण्यात मदत करते."
+            }
+        },
+        {
+            "name": "Peepal",
+            "descriptions": {
+                "en": "Peepal: The bark of the Peepal tree, rich in vitamin K, is an effective complexion corrector and preserver. It also helps in various ailments such as strengthening blood capillaries, minimizing inflammation, healing skin bruises faster, increasing skin resilience, treating pigmentation issues, wrinkles, dark circles, lightening surgery marks, scars, and stretch marks.",
+                "hi": "पीपल: पीपल के पेड़ की छाल, जो विटामिन K से भरपूर होती है, एक प्रभावी रंग सुधारक और संरक्षक होती है। यह रक्त वाहिनियों को मजबूत करने, सूजन को कम करने, त्वचा की चोटों को तेजी से ठीक करने, त्वचा की लचीलापन बढ़ाने, वर्णक समस्याओं, झुर्रियों, काले घेरे, सर्जरी के निशान, दाग-धब्बे और स्ट्रेच मार्क्स का इलाज करने में भी मदद करता है।",
+                "mr": "पीपल: पीपलच्या झाडाची छाल, जी विटॅमिन K ने समृद्ध आहे, प्रभावी रंग सुधारक आणि संरक्षक असते. हे रक्त कापिलरीला मजबूत करण्यास, सूज कमी करण्यास, त्वचेला पटकन बरे करण्यास, त्वचेला लवचिकता वाढवण्यासाठी, रंगाचे समस्यांचे, सुरकुत्या, काळे वर्तुळे, शस्त्रक्रियेद्वारे येणारे चिन्ह, दाग-धब्बे आणि स्ट्रेच मार्क्स यांचे उपचार करण्यास मदत करते."
+            }
+        },
+        {
+            "name": "Pomegranate",
+            "descriptions": {
+                "en": "Pomegranate: Pomegranate has a variety of medical benefits. It is rich in antioxidants, which reduce inflammation, protect cells from damage and eventually lower the chances of Cancer. It is also a great source of Vitamin C and an immunity booster. Pomegranate has also shown to stall the progress of Alzheimer disease and protect memory.",
+                "hi": "अनार: अनार के कई चिकित्सा लाभ होते हैं। यह एंटीऑक्सीडेंट्स से भरपूर होता है, जो सूजन को कम करते हैं, कोशिकाओं को नुकसान से बचाते हैं और अंततः कैंसर की संभावना को कम करते हैं। यह विटामिन C का एक अच्छा स्रोत है और प्रतिरक्षा बढ़ाने वाला है। अनार ने अल्जाइमर रोग की प्रगति को भी रोकने और याददाश्त को बचाने में मदद की है।",
+                "mr": "अनार: अनाराच्या विविध वैद्यकीय फायद्यां आहेत. हे अँटीऑक्सीडन्ट्सने भरपूर असते, जे सूज कमी करते, पेशींचे नुकसान रोखतात आणि कर्करोगाची शक्यता कमी करतात. हे विटॅमिन C चा एक उत्कृष्ट स्रोत आहे आणि प्रतिकारशक्ती वाढवण्यासाठी उपयुक्त आहे. अनाराने अल्झायमर रोगाची प्रगती थांबवण्यास आणि स्मृतीचे संरक्षण करण्यास मदत केली आहे."
+            }
+        },
+        {
+            "name": "Rasna",
+            "descriptions": {
+                "en": "Rasna: The Rasna plant or its oil helps to reduce bone and joint pain and reduce the symptoms of rheumatoid arthritis. It can also be used to cure cough and cold, release mucus in the respiratory system and clear them, eventually facilitating easy breathing. Rasna can also be applied to wounds to aid them in healing.",
+                "hi": "रसना: रसना पौधा या इसके तेल से हड्डियों और जोड़ों के दर्द को कम करने में मदद मिलती है और रुमेटॉइड आर्थराइटिस के लक्षणों को कम किया जा सकता है। इसका उपयोग खांसी और सर्दी का इलाज करने के लिए भी किया जा सकता है, श्वसन प्रणाली में श्लेष्मा को रिलीज करता है और उन्हें साफ करता है, जिससे अंततः सांस लेने में आसानी होती है। रसना को घावों पर भी लगाया जा सकता है ताकि वे ठीक हो सकें।",
+                "mr": "रसना: रसना वनस्पती किंवा त्याचे तेल हाडे आणि सांधेदुखी कमी करण्यात आणि रुमेटॉइड आर्थरायटिसच्या लक्षणांचे कमी करण्यात मदत करते. हे खोकला आणि सर्दीवर उपचार करण्यासाठी वापरले जाऊ शकते, श्वसन प्रणालीतील श्लेष्मा सोडते आणि ते स्वच्छ करते, त्यामुळे सहज श्वास घेणे सुलभ होते. रसना घावांवर देखील लावता येते ज्यामुळे ते बरे होण्यास मदत होते."
+            }
+        },
+        {
+            "name": "Rose_Apple",
+            "descriptions": {
+                "en": "Rose Apple: Rose apple seed and leaves are used for treating asthma and fever. Rose apples improve brain health and increase cognitive abilities. They are also effective against epilepsy, smallpox, and inflammation in joints. They contain active and volatile compounds that have been connected with having anti-microbial and anti-fungal effects.",
+                "hi": "गुलाब का सेब: गुलाब के सेब के बीज और पत्तियों का उपयोग अस्थमा और बुखार के इलाज के लिए किया जाता है। गुलाब का सेब मस्तिष्क के स्वास्थ्य को सुधारता है और संज्ञानात्मक क्षमताओं को बढ़ाता है। ये मिर्गी, चेचक और जोड़ों में सूजन के खिलाफ भी प्रभावी होते हैं। इनमें सक्रिय और अस्थिर यौगिक होते हैं जो सूक्ष्मजीवाणु और कवक-विरोधी प्रभावों से जुड़े हुए हैं।",
+                "mr": "गुलाबाचा सफरचंद: गुलाबाच्या सफरचंदाच्या बीया आणि पानांचा उपयोग अस्थमा आणि तापाचा उपचार करण्यासाठी केला जातो. गुलाबाच्या सफरचंदाने मस्तिष्काचे आरोग्य सुधारते आणि संज्ञानात्मक क्षमतेला वाढवते. हे मिर्गी, चेचक आणि सांध्यांमधील सूजनाविरुद्ध प्रभावी असतात. यात सक्रिय आणि अस्थिर यौगिक असतात ज्यांचा सूक्ष्मजीवाणू आणि कवकविरोधी प्रभाव असण्याशी संबंध आहे."
+            }
+        },
+        {
+            "name": "Roxburgh_fig",
+            "descriptions": {
+                "en": "Roxburgh fig: Roxburgh fig is noted for its big and round leaves. Leaves are crushed and the paste is applied on the wounds. They are also used in diarrhea and dysentery.",
+                "hi": "रॉक्सबर्ग अंजीर: रॉक्सबर्ग अंजीर को इसके बड़े और गोल पत्तों के लिए जाना जाता है। पत्तियों को कुचलकर और पेस्ट बनाकर घावों पर लगाया जाता है। इन्हें दस्त और पेचिश में भी उपयोग किया जाता है।",
+                "mr": "रॉक्सबर्ग अंजीर: रॉक्सबर्ग अंजीर त्याच्या मोठ्या आणि गोल पानांसाठी ओळखला जातो. पानांना कुटून आणि पेस्ट तयार करून घावांवर लावली जाते. त्याचा उपयोग दस्त आणि पेचिशमध्ये देखील केला जातो."
+            }
+        },
+        {
+            "name": "Sandalwood",
+            "descriptions": {
+                "en": "Sandalwood: Sandalwood is used for treating the common cold, cough, bronchitis, fever, and sore mouth and throat. It is also used to treat urinary tract infections (UTIs), liver disease, gallbladder problems, heatstroke, gonorrhea, headache, and conditions of the heart and blood vessels (cardiovascular disease).",
+                "hi": "चंदन: चंदन का उपयोग सामान्य सर्दी, खांसी, ब्रोन्काइटिस, बुखार और मुँह और गले में दर्द के इलाज के लिए किया जाता है। इसका उपयोग मूत्र पथ संक्रमण (UTIs), यकृत रोग, पित्ताशय की समस्याएँ, गर्मी से संबंधित बीमारियाँ, गोनोरिया, सिरदर्द और हृदय और रक्त वाहिनियों की समस्याओं (कार्डियोवैस्कुलर रोग) के इलाज के लिए भी किया जाता है।",
+                "mr": "चंदन: चंदनाचा उपयोग सामान्य सर्दी, खोकला, ब्रोन्कायटिस, ताप, आणि तोंड आणि घशातील वेदना यावर उपचार करण्यासाठी केला जातो. मूत्रपिंड संक्रमण (UTIs), यकृत रोग, पित्ताशयाची समस्या, उष्णतेची लागण, गोनोरिया, डोकेदुखी आणि हृदय व रक्तवाहिन्यांच्या अटी (कार्डिओव्हास्क्युलर रोग) यावर उपचार करण्यासाठी देखील वापरले जाते."
+            }
+        },
+        {
+            "name": "Tulsi",
+            "descriptions": {
+                "en": "Tulsi: Tulsi plant has the potential to cure a lot of ailments and is used extensively in traditional remedies. Tulsi can help cure fever, treat skin problems like acne, blackheads, and premature aging, and insect bites. Tulsi is also used to treat heart disease, fever, and respiratory problems.",
+                "hi": "तुलसी: तुलसी के पौधे में कई बीमारियों को ठीक करने की क्षमता होती है और इसे पारंपरिक उपचार में व्यापक रूप से उपयोग किया जाता है। तुलसी बुखार को ठीक करने, त्वचा की समस्याओं जैसे कि पिंपल्स, ब्लैकहेड्स और समय से पहले बुढ़ापे, और कीटों के काटने का इलाज करने में मदद कर सकती है। तुलसी का उपयोग हृदय रोग, बुखार और श्वसन समस्याओं के इलाज के लिए भी किया जाता है।",
+                "mr": "तुलसी: तुलसीच्या वनस्पतीत अनेक रोगांवर उपचार करण्याची क्षमता असते आणि पारंपारिक उपचारामध्ये याचा व्यापक वापर केला जातो. तुलसी ताप कमी करण्यात, त्वचेच्या समस्या जसे की पिंपल्स, ब्लॅकहेड्स आणि पूर्वीचे वय आणि कीटकाच्या कावण्यांवर उपचार करण्यात मदत करू शकते. तुलसी हृदय रोग, ताप आणि श्वसन समस्यांवर उपचार करण्यासाठी देखील वापरली जाते."
+            }
+        }
+    ]
+}

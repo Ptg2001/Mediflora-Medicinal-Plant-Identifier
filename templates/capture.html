@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-time Plant Recognition</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            padding-top: 2rem;
+        }
+        
+        .capture-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        #video-feed {
+            width: 100%;
+            max-width: 640px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        #captured-image {
+            display: none;
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 1rem;
+        }
+        
+        .results-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+        
+        .btn-icon {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .plant-info {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        
+        .language-selector {
+            max-width: 200px;
+            margin: 1rem auto;
+        }
+        
+        #audio-controls {
+            margin-top: 1rem;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-leaf"></i> Plant Recognition
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">
+                            <i class="fas fa-home"></i> Dashboard
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <!-- Camera Feed Section -->
+            <div class="col-lg-8 mx-auto">
+                <div class="capture-card">
+                    <h2 class="text-center mb-4">
+                        <i class="fas fa-camera"></i> Real-time Plant Recognition
+                    </h2>
+                    
+                    <div class="video-container text-center">
+                        <video id="video-feed" autoplay playsinline></video>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button id="capture-button" class="btn btn-primary btn-icon">
+                            <i class="fas fa-camera"></i> Capture
+                        </button>
+                        <button id="retry-button" class="btn btn-secondary btn-icon" style="display: none;">
+                            <i class="fas fa-redo"></i> Retry
+                        </button>
+                        <button id="generate-report-button" class="btn btn-success btn-icon" style="display: none;">
+                            <i class="fas fa-file-pdf"></i> Generate Report
+                        </button>
+                    </div>
+
+                    <div class="language-selector">
+                        <select id="language-selector" class="form-control">
+                            <option value="en">English</option>
+                            <option value="hi">Hindi</option>
+                            <option value="mr">Marathi</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div class="results-card" id="results-section" style="display: none;">
+                    <h3 class="text-center mb-3">Recognition Results</h3>
+                    
+                    <div class="plant-info">
+                        <h4>Predicted Plant:</h4>
+                        <p id="prediction-result" class="lead"></p>
+                        
+                        <h4>Description:</h4>
+                        <p id="plant-description" class="mb-3"></p>
+                        
+                        <div id="audio-controls" class="text-center">
+                            <button id="play-description" class="btn btn-info btn-icon">
+                                <i class="fas fa-volume-up"></i> Listen
+                            </button>
+                            <audio id="description-audio" style="display: none;"></audio>
+                        </div>
+                    </div>
+                    
+                    <img id="captured-image" alt="Captured Plant" class="img-fluid"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('video-feed');
+            const captureButton = document.getElementById('capture-button');
+            const retryButton = document.getElementById('retry-button');
+            const generateReportButton = document.getElementById('generate-report-button');
+            const capturedImage = document.getElementById('captured-image');
+            const resultsSection = document.getElementById('results-section');
+            const predictionResult = document.getElementById('prediction-result');
+            const plantDescription = document.getElementById('plant-description');
+            const playDescriptionButton = document.getElementById('play-description');
+            const descriptionAudio = document.getElementById('description-audio');
+            const languageSelector = document.getElementById('language-selector');
+            const canvas = document.createElement('canvas');
+
+            // Initialize camera
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    video.srcObject = stream;
+                })
+                .catch(err => {
+                    console.error('Error accessing camera:', err);
+                    alert('Unable to access camera. Please check permissions.');
+                });
+
+            captureButton.addEventListener('click', async () => {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                canvas.getContext('2d').drawImage(video, 0, 0);
+                
+                const imageDataUrl = canvas.toDataURL('image/jpeg');
+                capturedImage.src = imageDataUrl;
+                
+                try {
+                    const response = await fetch('/capture_image', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            image: imageDataUrl,
+                            language: languageSelector.value
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.predicted_plant) {
+                        predictionResult.textContent = result.predicted_plant;
+                        plantDescription.textContent = result.description || 'Loading description...';
+                        
+                        // Show results and update UI
+                        resultsSection.style.display = 'block';
+                        capturedImage.style.display = 'block';
+                        retryButton.style.display = 'inline-block';
+                        generateReportButton.style.display = 'inline-block';
+                        captureButton.style.display = 'none';
+                        
+                        // Get audio description
+                        const ttsResponse = await fetch('/tts', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'plant_name': result.predicted_plant,
+                                'language': languageSelector.value
+                            })
+                        });
+                        
+                        const ttsResult = await ttsResponse.json();
+                        if (ttsResult.tts_audio_url) {
+                            descriptionAudio.src = ttsResult.tts_audio_url;
+                            playDescriptionButton.style.display = 'inline-block';
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Failed to process image. Please try again.');
+                }
+            });
+
+            retryButton.addEventListener('click', () => {
+                resultsSection.style.display = 'none';
+                capturedImage.style.display = 'none';
+                retryButton.style.display = 'none';
+                generateReportButton.style.display = 'none';
+                captureButton.style.display = 'inline-block';
+                descriptionAudio.pause();
+                descriptionAudio.src = '';
+            });
+
+            playDescriptionButton.addEventListener('click', () => {
+                if (descriptionAudio.paused) {
+                    descriptionAudio.play();
+                    playDescriptionButton.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                } else {
+                    descriptionAudio.pause();
+                    playDescriptionButton.innerHTML = '<i class="fas fa-volume-up"></i> Listen';
+                }
+            });
+
+            generateReportButton.addEventListener('click', async () => {
+                try {
+                    const formData = new FormData();
+                    formData.append('plant_name', predictionResult.textContent);
+                    formData.append('image', capturedImage.src);
+                    
+                    const response = await fetch('/generate_report', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    if (result.success && result.report_url) {
+                        window.open(result.report_url, '_blank');
+                    } else {
+                        alert('Failed to generate report. Please try again.');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Failed to generate report. Please try again.');
+                }
+            });
+
+            languageSelector.addEventListener('change', async () => {
+                if (predictionResult.textContent) {
+                    try {
+                        const response = await fetch('/tts', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: new URLSearchParams({
+                                'plant_name': predictionResult.textContent,
+                                'language': languageSelector.value
+                            })
+                        });
+                        
+                        const result = await response.json();
+                        if (result.tts_audio_url) {
+                            descriptionAudio.src = result.tts_audio_url;
+                            plantDescription.textContent = result.description || 'Description not available in selected language.';
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('Failed to update language. Please try again.');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

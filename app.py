@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify, send_file, redirect, url_for, session
-from fuzzywuzzy import fuzz
+from rapidfuzz import fuzz
 import pyttsx3
 import speech_recognition as sr
 import tensorflow as tf

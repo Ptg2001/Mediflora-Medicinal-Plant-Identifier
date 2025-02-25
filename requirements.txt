@@ -16,3 +16,4 @@ pyttsx3
 werkzeug
 bcrypt
 regex
+tensorflow

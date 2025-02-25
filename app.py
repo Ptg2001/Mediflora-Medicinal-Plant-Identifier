@@ -41,15 +41,26 @@ plants_collection = mongo.db.plants  # Access the 'plants' collection
 plantslist_collection = mongo.db.plantslist
 reports_collection = mongo.db.reports
 
-# Load the trained model directly from Hugging Face
+# Load the trained model directly from Hugging Face when needed
 MODEL_URL = "https://huggingface.co/ptg2001/mediflora/resolve/main/model.pth"
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 num_classes = 52
-model = ViTForImageClassification.from_pretrained("google/vit-base-patch16-224-in21k", num_labels=num_classes)
-model.load_state_dict(torch.hub.load_state_dict_from_url(MODEL_URL, map_location=device))
-model.to(device)
-model.eval()
+
+# Image processing
+processor = ViTImageProcessor.from_pretrained("google/vit-base-patch16-224-in21k")
+
+all_plant_names = ["Coriender", "Geranium", "Tulasi", "Nooni", "Ekka", "Jackfruit", "Doddapatre", "Pomegranate", "Honge", "Papaya", "Hibiscus", "Sapota", "Tamarind", "Lemon_grass", "Ashoka", "Ashwagandha", "Curry_Leaf", "Curry", "Doddpathre", "Neem", "Pepper", "Aloevera", "Bamboo", "Catharanthus", "Amruta_Balli", "Betel_Nut", "Mint", "Lemon", "Brahmi", "Rose", "Raktachandini", "Insulin", "Avacado", "Tulsi", "Pappaya", "Basale", "Guava", "Henna", "Ganike", "Wood_sorel", "Jasmine", "Seethapala", "Gauva", "Nagadali", "Mango", "Palak(Spinach)", "Arali", "Castor", "Betel", "Nithyapushpa", "Amla", "Bhrami"]
+
+# Lazy load model only when accessing the detect page
+def get_model():
+    global model
+    if 'model' not in globals():
+        print("Loading model from Hugging Face...")
+        model = ViTForImageClassification.from_pretrained("google/vit-base-patch16-224-in21k", num_labels=num_classes)
+        model.load_state_dict(torch.hub.load_state_dict_from_url(MODEL_URL, map_location=device))
+        model.to(device)
+        model.eval()
+    return model
 
 # Image processing
 processor = ViTImageProcessor.from_pretrained("google/vit-base-patch16-224-in21k")
@@ -491,10 +502,12 @@ def delete_plant(plant_id):
         return jsonify({'message': 'Plant deleted successfully'})
     else:
         return jsonify({'error': 'Plant not found'}), 404
+    
 @app.route('/detect')
 def detect():
     if 'username' not in session:
         return redirect(url_for('login'))
+    model = get_model()  # Load the model only when this route is accessed
     return render_template('index.html')
 
 

@@ -41,13 +41,13 @@ plants_collection = mongo.db.plants  # Access the 'plants' collection
 plantslist_collection = mongo.db.plantslist
 reports_collection = mongo.db.reports
 
+# Load the trained model directly from Hugging Face
+MODEL_URL = "https://huggingface.co/ptg2001/mediflora/resolve/main/model.pth"
 
-# Load the trained model
-model_path = "model/model.pth"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 num_classes = 52
 model = ViTForImageClassification.from_pretrained("google/vit-base-patch16-224-in21k", num_labels=num_classes)
-model.load_state_dict(torch.load(model_path, map_location=device))
+model.load_state_dict(torch.hub.load_state_dict_from_url(MODEL_URL, map_location=device))
 model.to(device)
 model.eval()
 
@@ -594,5 +594,6 @@ def recognize():
     except Exception as e:
         return jsonify({'error': str(e)})
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5002))  # Use Render's dynamic PORT or default to 5002
+    app.run(host="0.0.0.0", port=port)

@@ -616,5 +616,7 @@ def recognize():
         return jsonify({'error': str(e)})
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5002))  # Use Render's dynamic PORT or default to 5002
+    port = int(os.environ.get("PORT", 8080))  # Default to 8080 (Render standard)
+    print(f"Running on port {port}...")  # Debugging output
     app.run(host="0.0.0.0", port=port)
+

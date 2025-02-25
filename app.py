@@ -28,7 +28,7 @@ import torchvision.transforms as transforms
 from PIL import Image
 from transformers import ViTForImageClassification, ViTImageProcessor
 import base64
-
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 # Initialize Flask app
 app = Flask(__name__)
 
@@ -503,12 +503,20 @@ def delete_plant(plant_id):
     else:
         return jsonify({'error': 'Plant not found'}), 404
     
-@app.route('/detect')
+@app.route('/detect', methods=["POST"])
 def detect():
     if 'username' not in session:
         return redirect(url_for('login'))
-    model = get_model()  # Load the model only when this route is accessed
-    return render_template('index.html')
+
+    # Load the model only when an image is uploaded
+    model = get_model()
+
+    image_file = request.files.get("image")
+    if not image_file:
+        return jsonify({"error": "No image uploaded"}), 400
+
+    return jsonify({"message": "Model loaded and image received!"})
+
 
 
 @app.route('/capture_image', methods=['POST'])

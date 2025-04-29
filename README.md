@@ -43,8 +43,29 @@ https://mediflora-medicinal-plant-identifier.onrender.com
 
 -   Users can use the Q & A session in mediflora app to enhance the knowledge about medicinal plants. It will be an interactive platform for the younger generation to develop their knowledge about medicinal plants.
 
-# Dashboard
-![image](https://github.com/Ptg2001/mediflora/assets/83298817/4a6f8ab9-e07f-4af4-a24b-b9e4cc175400)
+# Sign up page
+
+![image](https://github.com/user-attachments/assets/ee1b6c3f-3b3e-468f-a3e5-f26448bf66cc)
+
+# Login Page
+
+![image](https://github.com/user-attachments/assets/1466aab9-fb4d-44cf-92d0-ae451203e1c1)
+
+# Dashboard Page
+![image](https://github.com/user-attachments/assets/e92bff03-6f53-4a58-a249-64188cbb4618)
+
+# Plant List Page
+![image](https://github.com/user-attachments/assets/9151e6fa-240b-4999-a914-b9dcdf2c134d)
+![image](https://github.com/user-attachments/assets/01ed50e1-0272-41b6-8b04-7dd550da7fdf)
+
+# Medicinal Plant Identification Page
+![image](https://github.com/user-attachments/assets/b94946c7-2ab1-4bf7-aa13-8a927e56b72d)
+
+# Medicinal Plant Indetail Report
+![image](https://github.com/user-attachments/assets/c6228303-d2b0-4641-8f5d-926eb32f7297)
+
+
+
 
 
 
